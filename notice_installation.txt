@@ -1,0 +1,45 @@
+NOTICE D'INSTALLATION
+=====================
+
+Comment installer le jeu ?
+--------------------------
+Pour installer le jeu, il te suffit de mettre le CD-ROM dans le lecteur de ton PC.
+Le CD-ROM démarre tout seul et te propose de s'installer sur ton ordinateur.
+Il te suffit de cliquer sur le bouton INSTALLER pour que le jeu
+"Equipe Actimel contre les Megakrasses" s'installe.
+Tu n'auras besoin d'installer le jeu qu'une fois,
+après il te suffira de lancer le jeu directement.
+
+Comment lancer le jeu ?
+-----------------------
+Une fois le jeu installé, trois icônes apparaissent sur le bureau,
+clique sur "jouer ACTIMEL" pour lancer le jeu.
+
+
+
+
+-----------------------------------------------------------------------------------------
+
+
+
+Problèmes à l'installation
+--------------------------
+- Si le CD-ROM ne se lance pas automatiquement:
+	1) Ouvre l'explorateur de Windows
+	2) Sélectionne le lecteur de CD-ROM
+	3) double clique sur le fichier "installation.exe"
+
+- Si l'installation se lance mais ne peut se terminer:
+	Vérifie bien que tu as 90mo d'espace disque disponible sur le disque dur
+	de ton ordinateur pour installer le jeu.
+	
+Problèmes pour lancer le jeu
+----------------------------
+Si le jeu ne veut pas se lancer en cliquant sur l'icône "jouer ACTIMEL":
+Vérifie que ton ordinateur est au minimum un PC 400mhz avec 64mo ram,
+une carte graphique de 4mo et système d'exploitation Windows.
+
+Si ton ordinateur répond à cette configuration mais ne peut toujours pas lancer le jeu,
+choisis de lancer le jeu dans le mode "fenêtre":
+Pour cela, clique sur le bouton "Démarrer" de windows, puis vas dans le menu programmes,
+puis "Equipe Actimel" puis clique sur l'icône "Jouer Actimel (fenêtre)".
