@@ -1,0 +1,5599 @@
+if(!_global.$extendLib)
+{
+   Button.prototype.remove = function()
+   {
+      if(this.getDepth() < 0)
+      {
+         _root.swapDepths.call(this,1048575);
+      }
+      _root.removeMovieClip.call(this);
+   };
+   ASSetPropFlags(Button.prototype,"remove",1);
+   Button.prototype.swapDepths = function(pDepth)
+   {
+      _root.swapDepths.call(this,pDepth);
+   };
+   ASSetPropFlags(Button.prototype,"swapDepths",1);
+   Function.prototype["extends"] = function(pSuperclass)
+   {
+      this.prototype.__proto__ = pSuperclass.prototype;
+      this.prototype.__constructor__ = pSuperclass;
+      ASSetPropFlags(this.prototype,"__constructor__",1);
+   };
+   MovieClip.prototype.getMaxDepth = function(pMax)
+   {
+      if(!pMax)
+      {
+         pMax = 0;
+      }
+      for(_loc3_ in this)
+      {
+         if(typeof this[_loc3_] == "movieclip" || this[_loc3_] instanceof TextField || this[_loc3_] instanceof Button || this[_loc3_] instanceof Video)
+         {
+            return pMax <= this[_loc3_].getDepth() + 1 ? this[_loc3_].getDepth() + 1 : pMax;
+         }
+      }
+      return undefined;
+   };
+   ASSetPropFlags(MovieClip.prototype,"getMaxDepth",1);
+   MovieClip.prototype.getMinDepth = function(pMin)
+   {
+      var _loc3_ = 1.7976931348623157e+308;
+      if(!pMin)
+      {
+         pMin = 0;
+      }
+      for(var _loc4_ in this)
+      {
+         if(typeof this[_loc4_] == "movieclip" || this[_loc4_] instanceof TextField || this[_loc4_] instanceof Button || this[_loc4_] instanceof Video)
+         {
+            if(this[_loc4_].getDepth() < pMin)
+            {
+            }
+            _loc3_ -= this[_loc4_].getDepth();
+            if(_loc3_ > 1)
+            {
+               lDepth = this[_loc4_].getDepth();
+            }
+            _loc3_ = this[_loc4_].getDepth();
+         }
+      }
+      return lDepth <= -16384 ? undefined : lDepth + 1;
+   };
+   ASSetPropFlags(MovieClip.prototype,"getMinDepth",1);
+   MovieClip.prototype.remove = function()
+   {
+      if(this.getDepth() < 0)
+      {
+         this.swapDepths(1048575);
+      }
+      this.removeMovieClip();
+   };
+   ASSetPropFlags(MovieClip.prototype,"remove",1);
+   TextField.prototype.remove = function()
+   {
+      if(this.getDepth() < 0)
+      {
+         _root.swapDepths.call(this,1048575);
+      }
+      this.removeTextField();
+   };
+   ASSetPropFlags(TextField.prototype,"remove",1);
+   TextField.prototype.swapDepths = function(pDepth)
+   {
+      _root.swapDepths.call(this,pDepth);
+   };
+   ASSetPropFlags(TextField.prototype,"swapDepths",1);
+   TextFormat.prototype.getTextExtent2 = TextFormat.prototype.getTextExtent;
+   TextFormat.prototype.getTextExtent = function(text)
+   {
+      var _loc3_ = this.getTextExtent2(text);
+      if(getVersion().substr(0,3) == "MAC")
+      {
+         _loc3_.height = Math.floor(_loc3_.height / 20);
+         _loc3_.width = Math.floor(_loc3_.width / 20);
+      }
+      return _loc3_;
+   };
+   ASSetPropFlags(TextFormat.prototype,"getTextExtent2,getTextExtent",1);
+   Video.prototype.remove = function()
+   {
+      if(_root.getDepth.call(this) < 0)
+      {
+         _root.swapDepths.call(this,1048575);
+      }
+      _root.removeMovieClip.call(this);
+   };
+   ASSetPropFlags(Video.prototype,"remove",1);
+   Video.prototype.swapDepths = function(pDepth)
+   {
+      _root.swapDepths.call(this,pDepth);
+   };
+   ASSetPropFlags(Video.prototype,"swapDepths",1);
+   _global.$extendLib = true;
+}
+_global.Game = function()
+{
+   this.speedTime = 1;
+   this.soundMap = new Sound(_level10);
+   this.soundMap.attachSound("idSound_map");
+   this.soundHalo = new Sound(_level10);
+   this.soundHalo.attachSound("idSound_halo");
+   this.soundBackground = new Sound(_level10);
+   this.soundBackgroundSpeed = new Sound(_level10);
+   this.soundTime = new Sound(_level10);
+   this.soundTime.attachSound("idSound_time");
+   this.soundLetter = new Sound(_level10);
+   this.soundLetter.attachSound("idSound_lettre");
+   this.soundActimel = new Sound(_level10);
+   this.soundActimel.attachSound("idSound_Actimel");
+   this.soundPack = new Sound(_level10);
+   this.soundPack.attachSound("idSound_Pack");
+   this.soundLives = new Sound(_level10);
+   this.soundLives.attachSound("idSound_Lives");
+   this.soundStart = new Sound(_level10);
+   this.soundStart.attachSound("idSound_start");
+   this.soundForce = new Sound(_level10);
+   this.soundForce.attachSound("idSound_force");
+   this.soundShield = new Sound(_level10);
+   this.soundShield.attachSound("idSound_shield");
+   this.soundWeapon = new Sound(_level10);
+   this.soundWeapon.attachSound("idSound_weapon");
+   this.soundLostForce = new Sound(_level10);
+   this.soundLostForce.attachSound("idSound_lostForce");
+   this.soundLostLife = new Sound(_level10);
+   this.soundLostLife.attachSound("idSound_lostLife");
+   this.soundFireGun = new Sound(_level10);
+   this.soundFireGun.attachSound("idSound_fireGun");
+   this.soundFireFlash = new Sound(_level10);
+   this.soundFireFlash.attachSound("idSound_fireFlash");
+   this.soundPutMine = new Sound(_level10);
+   this.soundPutMine.attachSound("idSound_putMine");
+   this.soundMine = new Sound(_level10);
+   this.soundMine.attachSound("idSound_mine");
+   this.soundTrampoline = new Sound(_level10);
+   this.soundTrampoline.attachSound("idSound_trampoline");
+   this.soundVilosite = new Sound(_level10);
+   this.soundVilosite.attachSound("idSound_vilosite");
+   this.soundMarais = new Sound(_level10);
+   this.soundMarais.attachSound("idSound_marais");
+   this.soundGeiser = new Sound(_level10);
+   this.soundGeiser.attachSound("idSound_geiser");
+   this.soundGlouton = new Sound(_level10);
+   this.soundGlouton.attachSound("idSound_glouton");
+   this.soundMicelle = new Sound(_level10);
+   this.soundMicelle.attachSound("idSound_micelle");
+   this.soundDizzy = new Sound(_level10);
+   this.soundDizzy.attachSound("idSound_dizzy");
+   this.soundMaxiKill = new Sound(_level10);
+   this.soundMaxiKill.attachSound("idSound_maxiKill");
+   this.soundBoss = new Sound(_level10);
+   this.soundBoss.attachSound("idSound_boss");
+   this.soundBossLost = new Sound(_level10);
+   this.soundBossLost.attachSound("idSound_bossLost");
+   this.soundEquipe = new Sound(_level10);
+   this.soundEquipe.attachSound("idSound_Equipe");
+   this.soundFondVoix = new Sound(_level10);
+   this.soundFondVoix.attachSound("idSound_fondvoix");
+   this.soundLevel11 = new Sound(_level10);
+   this.soundLevel11.attachSound("idSound_level11");
+   this.soundLevel12 = new Sound(_level10);
+   this.soundLevel12.attachSound("idSound_level12");
+   this.soundLevel13 = new Sound(_level10);
+   this.soundLevel13.attachSound("idSound_level13");
+   this.soundLevel21 = new Sound(_level10);
+   this.soundLevel21.attachSound("idSound_level21");
+   this.soundLevel22 = new Sound(_level10);
+   this.soundLevel22.attachSound("idSound_level22");
+   this.soundLevel23 = new Sound(_level10);
+   this.soundLevel23.attachSound("idSound_level23");
+   this.soundLevel24 = new Sound(_level10);
+   this.soundLevel24.attachSound("idSound_level24");
+   this.soundLevel31 = new Sound(_level10);
+   this.soundLevel31.attachSound("idSound_level31");
+   this.soundLevel32 = new Sound(_level10);
+   this.soundLevel32.attachSound("idSound_level32");
+   this.soundLevel33 = new Sound(_level10);
+   this.soundLevel33.attachSound("idSound_level33");
+   this.soundLevel34 = new Sound(_level10);
+   this.soundLevel34.attachSound("idSound_level34");
+   if(options)
+   {
+      if(cheatcode.join("") == "89657765717913")
+      {
+         this.cheat();
+      }
+      else
+      {
+         options.initGame(this);
+      }
+   }
+   else
+   {
+      stop();
+   }
+   Game.quality = this.quality;
+   if(this.difficulty == 1)
+   {
+      this.totalTime = 360;
+   }
+   else if(this.difficulty == 2)
+   {
+      this.totalTime = 300;
+   }
+   else
+   {
+      this.totalTime = 240;
+   }
+};
+Game.UP = 38;
+Game.LEFT = 37;
+Game.RIGHT = 39;
+Game.DOWN = 40;
+Game.ACTION = 32;
+Game.PAUSE = 27;
+Game.CHEATKEY = 35;
+Game.prototype.startGame = function()
+{
+   mcScreen.remove();
+   this.help();
+   _root.attachMovie("idScreen","mcScreen",_root.getMaxDepth(),{game:this,level:this.level});
+   mcScreen.loadGame();
+};
+Game.prototype.start = function()
+{
+   this.time = this.totalTime * 20;
+   this.chrono = setInterval(this.onChrono,1000,this);
+   this.speedTime = 1;
+   this.actimel = 0;
+   this.pack = 0;
+   this.maxibeurk = 0;
+   this.actimen = 0;
+   BonusEnd.help = false;
+   this.completed = false;
+   _root.attachMovie("idConsole","mcConsole",104,{_x:3,_y:1,univers:Math.floor(this.level / 10),lives:this.lives,time:Math.floor(this.time / 20)});
+   this.soundBackground.attachSound("idSound_back" + Math.floor(this.level / 10));
+   this.soundBackgroundSpeed.attachSound("idSound_speed" + Math.floor(this.level / 10));
+   this.soundBackground.setVolume(25 * this.volume);
+   this.soundBackgroundSpeed.setVolume(25 * this.volume);
+   _root.attachMovie("idCadreHB","mcCadreHaut",100,{_x:0,_y:22,_yscale:-100});
+   _root.attachMovie("idCadreHB","mcCadreBas",101,{_x:0,_y:490});
+   _root.attachMovie("idCadreGD","mcCadreGauche",102,{_x:0,_y:47});
+   _root.attachMovie("idCadreGD","mcCadreDroit",103,{_x:641.6,_y:47});
+   mcFps.swapDepths(200);
+   bench.swapDepths(201);
+   _root.createEmptyMovieClip("mcFond",0);
+   switch(this.level)
+   {
+      case 11:
+      case 21:
+      case 31:
+         this.loadGame(320,455,-450,60);
+         return undefined;
+      case 12:
+      case 22:
+      case 32:
+         this.loadGame(100,100,-100,-130);
+         return undefined;
+      case 13:
+      case 23:
+      case 33:
+         this.loadGame(320,240,0,33);
+         return undefined;
+      case 24:
+      case 34:
+         this.loadGame(100,100,-100,-100);
+         return undefined;
+      default:
+         _root.attachMovie("idTemp","mcScreen",_root.getMaxDepth());
+         this.onTime = setInterval(this.onGameOver,1000,this);
+         return undefined;
+   }
+};
+Game.prototype.initStart = function()
+{
+   if(mcFond.getBytesLoaded() >= mcFond.getBytesTotal() && mcFond.getBytesTotal())
+   {
+      newGame.soundBackground.start(0,500);
+      if(mcPerso.engine == 1)
+      {
+         mcFond.scrolling = 5;
+         mcFond.onEnterFrame = function()
+         {
+            newGame.time -= newGame.speedTime;
+            benchIn();
+            this._x = (- mcPerso.x) / this.scrolling;
+         };
+         mcZone.init();
+         mcPerso.target = mcZone;
+      }
+      else if(mcPerso.engine == 2)
+      {
+         mcFond.scrolling = 5;
+         mcFond.onEnterFrame = function()
+         {
+            newGame.time -= newGame.speedTime;
+            benchIn();
+            this._y = (- mcPerso.y) / this.scrolling;
+         };
+         mcZone.init();
+         mcPerso.target = mcZone;
+      }
+      else if(mcPerso.engine == 3)
+      {
+         mcFond._y = 32;
+         mcFond.scrollingMax = 5;
+         mcFond.scrolling = 0;
+         mcFond.onEnterFrame = function()
+         {
+            benchIn();
+            newGame.time -= newGame.speedTime;
+            if(this._x < -1290)
+            {
+               this._x = - this.scrolling;
+            }
+            this._x -= this.scrolling;
+            mcZone0._x -= Zone3.scrolling;
+            mcZone1._x -= Zone3.scrolling;
+            if(mcZone1._x < 0)
+            {
+               mcZone0._x = mcZone1._width + mcZone1._x;
+               if(mcZone0.enabled)
+               {
+                  mcZone0.createZone();
+               }
+            }
+            if(mcZone0._x < 0)
+            {
+               mcZone1._x = mcZone0._width + mcZone0._x;
+               if(mcZone1.enabled)
+               {
+                  mcZone1.createZone();
+               }
+            }
+         };
+      }
+      else
+      {
+         mcFond.onEnterFrame = function()
+         {
+            newGame.time -= newGame.speedTime;
+            benchIn();
+         };
+         mcZone.init();
+         mcPerso.target = mcZone;
+      }
+   }
+   mcPerso.game = newGame;
+   _quality = Game.quality;
+   mcPerso.go();
+   mcScreen.removeMovieClip();
+   delete _root.onEnterFrame;
+};
+Game.prototype.replay = function(pType)
+{
+   clearInterval(this.chrono);
+   this.soundBackground.stop();
+   this.soundBackgroundSpeed.stop();
+   _quality = "high";
+   switch(pType)
+   {
+      case "lost":
+      case "cheat":
+         this.lives--;
+         if(this.lives > 0)
+         {
+            _root.attachMovie("idLost","mcScreen",_root.getMaxDepth(),{game:this});
+            break;
+         }
+         _root.attachMovie("idGameOver","mcScreen",_root.getMaxDepth());
+         break;
+      case "next":
+         this.completed = true;
+         BonusStart.help = false;
+         _root.attachMovie("idScreen","mcScreen",_root.getMaxDepth(),{game:this,level:this.level});
+         if(this.level != 34 || this.level == 34 && this.lives <= 0)
+         {
+            mcScreen.loadScore();
+            break;
+         }
+         mcScreen.loadEnd();
+   }
+   mcConsole.remove();
+   mcCadreGauche.remove();
+   mcCadreDroit.remove();
+   mcCadreHaut.remove();
+   mcCadreBas.remove();
+   mcPerso.remove();
+   mcZone.remove();
+   mcZone0.remove();
+   mcZone1.remove();
+   mcGroupeJets.remove();
+   mcFond.remove();
+   if(pType == "lost")
+   {
+      if(this.lives > 0)
+      {
+         this.onTime = setInterval(this.onReplay,2000,this);
+      }
+      else
+      {
+         this.onTime = setInterval(this.onGameOver,2000,this);
+      }
+   }
+   if(pType == "cheat")
+   {
+      this.cheat();
+   }
+};
+Game.prototype.cheat = function()
+{
+   this.quality = "medium";
+   this.volume = 4;
+   mcScreen.remove();
+   BonusStart.help = false;
+   _quality = "high";
+   _root.attachMovie("idCheat","mcScreen",_root.getMaxDepth());
+};
+Game.prototype.loadGame = function(pActimanX, pActimanY, pZoneX, pZoneY)
+{
+   if(this.level % 10 != 3)
+   {
+      _root.attachMovie("idActiman","mcPerso",50,{_x:pActimanX,_y:pActimanY,engine:this.level % 10});
+      _root.attachMovie("idZone" + this.level,"mcZone",10,{posX:pZoneX,posY:pZoneY,target:mcPerso,game:this});
+   }
+   else
+   {
+      _root.attachMovie("idVaisseau" + Math.floor(this.level / 10),"mcPerso",50,{_x:pActimanX,_y:pActimanY,engine:this.level % 10,game:this});
+      _root.attachMovie("idZone" + this.level,"mcZone0",10,{_y:pZoneY,game:this,target:mcPerso,num:0,leveldes:Zone3["level" + this.level]});
+      _root.attachMovie("idZone" + this.level,"mcZone1",11,{_x:mcZone0._width,_y:pZoneY,game:this,target:mcPerso,num:1,leveldes:Zone3["level" + this.level]});
+   }
+   mcFond.loadMovie("fond" + this.level + ".swf");
+   _root.onEnterFrame = this.initStart;
+};
+Game.prototype.onReplay = function(pThis)
+{
+   this = pThis;
+   clearInterval(this.onTime);
+   this.soundFondVoix.stop();
+   this.start();
+};
+Game.prototype.onGameOver = function(pThis)
+{
+   this = pThis;
+   clearInterval(this.onTime);
+   mcScreen.remove();
+   _root.attachMovie("idScreen","mcScreen",_root.getMaxDepth(),{game:this,level:this.level});
+   mcScreen.loadScore();
+};
+Game.prototype.onChrono = function(pThis)
+{
+   this = pThis;
+   _root.mcConsole.time = Math.floor(this.time / 20);
+   if(this.time < 1200)
+   {
+      if(_root.mcConsole.time == 59)
+      {
+         new Color(_root.mcConsole.mcTime).setRGB(16711680);
+         _root.mcConsole.mcWatch.gotoAndPlay("hurry");
+         this.soundBackground.stop();
+         this.soundBackgroundSpeed.start(0,500);
+         this.soundTime.start();
+      }
+      else if(_root.mcConsole.time == 0)
+      {
+         clearInterval(this.chrono);
+         _root.mcPerso.force = 0;
+         _root.mcPerso.onHurt();
+      }
+   }
+};
+Game.prototype.next = function()
+{
+   this.actimel = 0;
+   this.pack = 0;
+   this.maxibeurk = 0;
+   if(this.level == 13)
+   {
+      this.level = 21;
+   }
+   else if(this.level == 24)
+   {
+      this.level = 31;
+   }
+   else
+   {
+      this.level++;
+   }
+   this.startGame();
+};
+Game.prototype.setScore = function(pScreen)
+{
+   pScreen.univers = Math.floor(this.level / 10);
+   pScreen.level = this.level % 10;
+   pScreen.nb_actimel = this.actimel;
+   pScreen.nb_pack = this.pack;
+   pScreen.nb_maxi = this.maxibeurk;
+   pScreen.nb_time = Math.ceil(this.time / 20);
+   pScreen.nb_letter = this.actimen;
+   pScreen.completed = this.completed;
+   pScreen.difficulty = this.difficulty;
+   pScreen.lives = this.lives;
+   pScreen.pGame = this;
+   pScreen.play();
+};
+Game.prototype.help = function()
+{
+   if(this.level > 11)
+   {
+      BonusPoint.help = true;
+      BonusPack.help = true;
+      BonusForce.help = true;
+      BonusLife.help = true;
+      BonusLetter.help = true;
+      BonusWeapon.help = true;
+      BonusShield.help = true;
+      this.help = null;
+   }
+};
+_global.Zone = function()
+{
+   this.bonus = [];
+   this.trap = [];
+   this.plateforme = [];
+   this.plateformetramp = [];
+   this.plateformemove = [];
+   this.plateformevert = [];
+   this.ennemis = [];
+   this.wall = [];
+   this.trapennemis = [];
+   if(BonusStart.help)
+   {
+      this.mcMission.remove();
+   }
+};
+Zone["extends"](MovieClip);
+Object.registerClass("idZone11",Zone);
+Object.registerClass("idZone12",Zone);
+Object.registerClass("idZone21",Zone);
+Object.registerClass("idZone22",Zone);
+Object.registerClass("idZone24",Zone);
+Object.registerClass("idZone31",Zone);
+Object.registerClass("idZone32",Zone);
+Object.registerClass("idZone34",Zone);
+Zone.prototype.init = function()
+{
+   this.debX = this.posX + this.target.posX;
+   this.debY = this.posY + this.target.posY;
+   this.move();
+};
+Zone.prototype.move = function()
+{
+   this._x = this.debX - this.target.x;
+   this._y = this.debY - this.target.y;
+};
+_global.BonusPoint = function()
+{
+   var _loc2_ = this._parent.bonus;
+   var _loc3_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+};
+BonusPoint["extends"](MovieClip);
+Object.registerClass("idActimel",BonusPoint);
+BonusPoint.prototype.onHit = function()
+{
+   var _loc3_ = this._parent.game;
+   _loc3_.soundActimel.start();
+   _root.mcConsole.actimel = ++_loc3_.actimel;
+   this.play();
+   var _loc4_;
+   if(!BonusPoint.help)
+   {
+      _loc4_ = this._parent.target;
+      _loc4_.bonus = "bonuspoint";
+      delete _loc4_.onPopup;
+      BonusPoint.help = true;
+   }
+   this.onHit = null;
+};
+_global.BonusPack = function()
+{
+   var _loc2_ = this._parent.bonus;
+   var _loc3_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+};
+BonusPack["extends"](MovieClip);
+Object.registerClass("idPack",BonusPack);
+BonusPack.prototype.onHit = function()
+{
+   var _loc2_ = this._parent.game;
+   _loc2_.soundPack.start();
+   _loc2_.pack++;
+   this.play();
+   var _loc3_;
+   if(!BonusPack.help)
+   {
+      _loc3_ = this._parent.target;
+      _loc3_.bonus = "bonuspack";
+      delete _loc3_.onPopup;
+      BonusPack.help = true;
+   }
+   this.onHit = null;
+};
+_global.BonusForce = function()
+{
+   if(this._parent.game.difficulty > 1 && this._name.substring(2,3) == "1")
+   {
+      this.remove();
+   }
+   if(this._parent.game.difficulty > 2 && this._name.substring(2,3) == "2")
+   {
+      this.remove();
+   }
+   var _loc2_ = this._parent.bonus;
+   var _loc3_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+};
+BonusForce["extends"](MovieClip);
+Object.registerClass("idForce",BonusForce);
+BonusForce.prototype.onHit = function()
+{
+   var _loc3_ = this._parent.game;
+   var _loc4_;
+   if(!BonusForce.help)
+   {
+      _loc4_ = this._parent.target;
+      _loc4_.bonus = "bonusforce";
+      delete _loc4_.onPopup;
+      BonusForce.help = true;
+   }
+   if(this._parent.target.force < 3)
+   {
+      this._parent.target.force++;
+      _loc3_.soundForce.start();
+      _root.mcConsole.mcForce.prevFrame();
+      this.remove();
+   }
+};
+_global.BonusLife = function()
+{
+   if(this._parent.game.difficulty > 1 && this._name.substring(2,3) == "1")
+   {
+      this.remove();
+   }
+   if(this._parent.game.difficulty > 2 && this._name.substring(2,3) == "2")
+   {
+      this.remove();
+   }
+   var _loc2_ = this._parent.bonus;
+   var _loc3_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+};
+BonusLife["extends"](MovieClip);
+Object.registerClass("idVie",BonusLife);
+BonusLife.prototype.onHit = function()
+{
+   var _loc3_ = this._parent.game;
+   _loc3_.soundLives.start();
+   _loc3_.lives++;
+   _root.mcConsole.lives++;
+   this.play();
+   var _loc4_;
+   if(!BonusLife.help)
+   {
+      _loc4_ = this._parent.target;
+      _loc4_.bonus = "bonuslife";
+      delete _loc4_.onPopup;
+      BonusLife.help = true;
+   }
+   this.onHit = null;
+};
+_global.BonusShield = function()
+{
+   if(this._parent.game.difficulty > 1 && this._name.substring(2,3) == "1")
+   {
+      this.remove();
+   }
+   if(this._parent.game.difficulty > 2 && this._name.substring(2,3) == "2")
+   {
+      this.remove();
+   }
+   var _loc2_ = this._parent.bonus;
+   var _loc3_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+};
+BonusShield["extends"](MovieClip);
+Object.registerClass("idBouclier",BonusShield);
+BonusShield.prototype.onHit = function()
+{
+   this._parent.target.onShield();
+   var _loc2_ = this._parent.game;
+   _loc2_.soundShield.start();
+   var _loc3_;
+   if(!BonusShield.help)
+   {
+      _loc3_ = this._parent.target;
+      _loc3_.bonus = "bonusshield";
+      delete _loc3_.onPopup;
+      BonusShield.help = true;
+   }
+   this.remove();
+};
+_global.BonusLetter = function()
+{
+   var _loc2_ = this._parent.bonus;
+   var _loc3_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+   this.num = this._name.substring(9);
+   this.gotoAndStop(this.num);
+};
+BonusLetter["extends"](MovieClip);
+Object.registerClass("idLettre",BonusLetter);
+Object.registerClass("idLettre3",BonusLetter);
+BonusLetter.prototype.onHit = function()
+{
+   var _loc3_ = this._parent.game;
+   this.onHit = null;
+   if(_loc3_.level == 32)
+   {
+      this._parent.attachMovie("idCramz","mcCramz" + this.num,this._parent.getMaxDepth(),{_x:this._x,_y:this._y});
+   }
+   this._x = this._parent.mcEnd._x + (this.num - 1) * 30;
+   this._y = this._parent.mcEnd._y;
+   this.mcLettre._visible = false;
+   var _loc4_ = _loc3_.level != 22 ? "" : "Porte";
+   this.mcActiman.gotoAndStop("end" + _loc4_);
+   _loc3_.actimen++;
+   _loc3_.soundLetter.start();
+   var _loc5_;
+   if(_loc3_.actimen == 7)
+   {
+      _loc5_ = 1;
+      while(_loc5_ < 8)
+      {
+         _root.mcConsole["mcLettre" + _loc5_].gotoAndPlay(2);
+         _loc5_ += 1;
+      }
+   }
+   else
+   {
+      _root.mcConsole["mcLettre" + this.num].play();
+   }
+   var _loc6_;
+   if(!BonusLetter.help)
+   {
+      _loc6_ = this._parent.target;
+      _loc6_.bonus = "bonusletter";
+      delete _loc6_.onPopup;
+      BonusLetter.help = true;
+   }
+};
+_global.BonusLetter2 = function()
+{
+   this.stop();
+};
+BonusLetter2["extends"](MovieClip);
+Object.registerClass("idLettre2",BonusLetter2);
+BonusLetter2.prototype.onHit = function()
+{
+   var _loc3_ = this._parent.game;
+   _loc3_.actimen++;
+   if(_loc3_.actimen == 7)
+   {
+      _loc3_.completed = true;
+   }
+   _loc3_.soundLetter.start();
+   var _loc4_;
+   if(!_loc3_.completed)
+   {
+      _root.mcConsole["mcLettre" + _loc3_.actimen].play();
+      this.onEnterFrame = function()
+      {
+         this._x += 60;
+         if(this._x > 600)
+         {
+            this.remove();
+         }
+      };
+   }
+   else
+   {
+      _loc3_.speedTime = 0;
+      this._parent.target.hurt = null;
+      clearInterval(this._parent.target.onTime);
+      _loc4_ = 1;
+      while(_loc4_ < 8)
+      {
+         _root.mcConsole["mcLettre" + _loc4_].gotoAndPlay(2);
+         _loc4_ += 1;
+      }
+      this.onEnterFrame = function()
+      {
+         this._x += 60;
+         if(this._x > 600)
+         {
+            _root.attachMovie("idGroupeJets","mcGroupeJets",this._parent.target.getDepth() - 1,{_x:650,_y:240});
+            this._parent.onTime = setInterval(this._parent.next,5000,this._parent);
+            this._visible = false;
+            this.onEnterFrame = null;
+         }
+      };
+   }
+   this.gotoAndStop("win");
+   this.onHit = null;
+};
+_global.BonusWeapon = function()
+{
+   var _loc2_ = this._parent.bonus;
+   var _loc3_ = this._parent.game.level;
+   if(_loc3_ == 21)
+   {
+      this.gotoAndStop(1);
+   }
+   else if(_loc3_ == 22 || _loc3_ == 32)
+   {
+      this.gotoAndStop(2);
+   }
+   else
+   {
+      this.gotoAndStop(3);
+   }
+   var _loc4_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc4_ = Math.floor(this._x / 640);
+   }
+   else
+   {
+      _loc4_ = Math.floor(this._y / 480);
+   }
+   if(!_loc2_[_loc4_])
+   {
+      _loc2_[_loc4_] = {};
+   }
+   _loc2_[_loc4_][this._name] = this;
+};
+BonusWeapon["extends"](MovieClip);
+Object.registerClass("idWeapon",BonusWeapon);
+BonusWeapon.prototype.onHit = function()
+{
+   var _loc3_ = this._parent.target;
+   var _loc4_ = this._parent.game;
+   _loc4_.soundWeapon.start();
+   if(!BonusWeapon.help)
+   {
+      _loc3_ = this._parent.target;
+      _loc3_.bonus = "bonusweapon";
+      delete _loc3_.onPopup;
+      BonusWeapon.help = true;
+   }
+   else
+   {
+      _loc3_.munitions += _loc3_.maxmunition * ((4 - _loc4_.difficulty) / 3);
+      _root.mcConsole.weapon = _loc3_.munitions;
+   }
+   this.remove();
+};
+_global.BonusStart = function()
+{
+   var _loc2_ = this._parent.bonus;
+   var _loc3_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+};
+BonusStart["extends"](MovieClip);
+Object.registerClass("idStart",BonusStart);
+BonusStart.prototype.onHit = function()
+{
+   var _loc3_ = this._parent.target;
+   var _loc4_ = this._parent.game;
+   _loc4_.soundStart.start();
+   if(!BonusStart.help)
+   {
+      if(_loc4_.level % 10 == 3)
+      {
+         _loc3_.onFps = null;
+         _loc3_.maxibeurk = null;
+         _root.mcFond.scrolling = Zone3.scrolling = 0;
+         _loc3_.onEnterFrame = null;
+         _loc4_.speedTime = 0;
+         _root.attachMovie("idBall","mcBall",_root.getMaxDepth(),{_x:_loc3_._x,_y:_loc3_._y,target:_loc3_,screen:"bonusstart",level:"lev" + _loc4_.level});
+      }
+      else
+      {
+         _loc3_.bonus = "bonusstart";
+         delete _loc3_.onPopup;
+      }
+   }
+   BonusStart.help = true;
+   this.remove();
+};
+_global.BonusEnd = function()
+{
+   var _loc2_ = this._parent.bonus;
+   var _loc3_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+};
+BonusEnd["extends"](MovieClip);
+Object.registerClass("idEnd",BonusEnd);
+BonusEnd.prototype.onHit = function()
+{
+   var _loc2_ = this._parent.game;
+   var _loc3_ = this._parent.target;
+   var _loc4_;
+   var _loc5_;
+   if(_loc2_.actimen < 7)
+   {
+      if(!BonusEnd.help)
+      {
+         _loc3_.bonus = "bonusend";
+         delete _loc3_.onPopup;
+         BonusEnd.help = true;
+      }
+   }
+   else
+   {
+      if(_loc2_.level == 22)
+      {
+         _loc4_ = "Porte";
+         this._parent.mcPorte.play();
+      }
+      else
+      {
+         _loc4_ = "";
+      }
+      _loc5_ = 1;
+      while(_loc5_ < 8)
+      {
+         this._parent["mcActiman" + _loc5_].mcActiman.gotoAndStop("win" + lEndLabel);
+         _loc5_ += 1;
+      }
+      _loc2_.speedTime = 0;
+      _loc2_.completed = true;
+      this.time = 3767;
+      _loc3_.pause = null;
+      this.onHit = null;
+      _loc3_.hurt = null;
+      _loc2_.soundEquipe.setVolume(20 * _loc2_.volume);
+      _loc2_.soundEquipe.start();
+      this.onEnterFrame = this.onEnd;
+   }
+};
+BonusEnd.prototype.onEnd = function()
+{
+   if(6724 - this.time > 4000)
+   {
+      this.onEnterFrame = null;
+      this._parent.game.replay("next");
+   }
+};
+_global.Mucus = function()
+{
+   var _loc2_ = this._parent.trap;
+   var _loc3_;
+   var _loc4_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+      _loc4_ = Math.floor((this._x + this._width) / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+      _loc4_ = Math.floor((this._y + this._height) / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+   var _loc5_ = _loc4_;
+   while(_loc5_ > _loc3_)
+   {
+      if(!_loc2_[_loc5_])
+      {
+         _loc2_[_loc5_] = {};
+      }
+      _loc2_[_loc5_][this._name] = this;
+      _loc5_ -= 1;
+   }
+   lwall = this._parent.wall[_loc3_];
+   for(var _loc6_ in lwall)
+   {
+      if(lwall[_loc6_].mcHit.hitTest(this))
+      {
+         this.status = lwall[_loc6_];
+         this._y = this.status._y + 2;
+      }
+   }
+   lplateforme = this._parent.plateforme[_loc3_];
+   for(_loc6_ in lplateforme)
+   {
+      if(lplateforme[_loc6_].mcHit.hitTest(this))
+      {
+         this.status = lplateforme[_loc6_];
+         this._y = this.status._y + 2;
+      }
+   }
+};
+Mucus["extends"](MovieClip);
+Object.registerClass("idMucus",Mucus);
+Object.registerClass("idVilosites",Mucus);
+Mucus.prototype.onHit = function()
+{
+   bench.debug = "Mucus/Vilosite: " + this._name;
+   this._parent.game.soundVilosite.start();
+   this.gotoAndStop("enabled");
+};
+Mucus.prototype.onExit = function()
+{
+   bench.debug = "stop";
+   this.gotoAndStop("disabled");
+};
+_global.Mare = function()
+{
+   var _loc2_ = this._parent.ennemis;
+   this.status = null;
+   var _loc3_;
+   var _loc4_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+      _loc4_ = Math.floor((this._x + this._width) / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+      _loc4_ = Math.floor((this._y + this._height) / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+   var _loc5_ = _loc4_;
+   while(_loc5_ > _loc3_)
+   {
+      if(!_loc2_[_loc5_])
+      {
+         _loc2_[_loc5_] = {};
+      }
+      _loc2_[_loc5_][this._name] = this;
+      _loc5_ -= 1;
+   }
+   this._visible = false;
+   this.zone = _loc3_;
+   this.piege = true;
+};
+Mare["extends"](MovieClip);
+Object.registerClass("idMare",Mare);
+Mare.prototype.onHit = function()
+{
+   this._parent.game.soundMarais.start();
+   this._parent.target.hurt();
+   this.gotoAndStop("enabled");
+};
+Mare.prototype.onExit = function()
+{
+   bench.debug = "stop";
+   this.gotoAndStop("disabled");
+};
+Mare.prototype.go = function()
+{
+   if(this.status == null)
+   {
+      lwall = this._parent.wall[this.Zone];
+      for(var _loc2_ in lwall)
+      {
+         if(lwall[_loc2_].mcHit.hitTest(this))
+         {
+            this.status = lwall[_loc2_];
+            this.status.addEnnemi(this);
+            this._y = this.status._y;
+         }
+      }
+      lplateforme = this._parent.plateforme[this.Zone];
+      for(_loc2_ in lplateforme)
+      {
+         if(lplateforme[_loc2_].mcHit.hitTest(this))
+         {
+            this.status = lplateforme[_loc2_];
+            this.status.addEnnemi(this);
+            this._y = this.status._y;
+         }
+      }
+   }
+   if(!this._visible)
+   {
+      this._visible = true;
+      this.gotoAndStop("enabled");
+   }
+};
+Mare.prototype.stop = function()
+{
+   this._visible = false;
+   this.gotoAndStop("disabled");
+};
+_global.Gloutonne = function()
+{
+   this.timeofeat;
+   this.timetoeat = 2000;
+   var _loc2_ = this._parent.trapennemis;
+   var _loc3_;
+   var _loc4_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+      _loc4_ = Math.floor((this._x + this._width) / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+      _loc4_ = Math.floor((this._y + this._height) / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+   var _loc5_ = _loc4_;
+   while(_loc5_ > _loc3_)
+   {
+      if(!_loc2_[_loc5_])
+      {
+         _loc2_[_loc5_] = {};
+      }
+      _loc2_[_loc5_][this._name] = this;
+      _loc5_ -= 1;
+   }
+};
+Gloutonne["extends"](MovieClip);
+Object.registerClass("idGlouton0",Gloutonne);
+Object.registerClass("idGlouton1",Gloutonne);
+Object.registerClass("idGlouton2",Gloutonne);
+Object.registerClass("idGlouton3",Gloutonne);
+Gloutonne.prototype.eatMaxib = function()
+{
+   if(1311 - this.timeofeat > this.timetoeat)
+   {
+      this.onEnterFrame = null;
+      this.onExit();
+   }
+};
+Gloutonne.prototype.onExit = function()
+{
+   bench.debug = "stop";
+   this.gotoAndStop("disabled");
+};
+_global.Geiser = function()
+{
+   var _loc2_ = this._parent.trap;
+   var _loc3_;
+   var _loc4_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+      _loc4_ = Math.floor((this._x + this._width) / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+      _loc4_ = Math.floor((this._y + this._height) / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+   var _loc5_ = _loc4_;
+   while(_loc5_ > _loc3_)
+   {
+      if(!_loc2_[_loc5_])
+      {
+         _loc2_[_loc5_] = {};
+      }
+      _loc2_[_loc5_][this._name] = this;
+      _loc5_ -= 1;
+   }
+};
+Geiser["extends"](MovieClip);
+Object.registerClass("idGeiser",Geiser);
+Geiser.prototype.onHit = function()
+{
+   this.gotoAndPlay("enabled");
+};
+_global.Plateforme = function()
+{
+   this.mcHit._visible = false;
+   if(this._parent.game.difficulty > 1 && this._name.substring(2,3) == "1")
+   {
+      this.remove();
+   }
+   this.ennemis = new Object();
+   this.zonebegin;
+   this.zoneend;
+   var _loc2_ = this._parent.plateforme;
+   var _loc3_;
+   var _loc4_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+      _loc4_ = Math.floor((this._x + this._width) / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+      _loc4_ = Math.floor((this._y + this._height) / 480);
+   }
+   this.zonebegin = _loc3_;
+   this.zoneend = _loc4_;
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+   var _loc5_ = _loc4_;
+   while(_loc5_ > _loc3_)
+   {
+      if(!_loc2_[_loc5_])
+      {
+         _loc2_[_loc5_] = {};
+      }
+      _loc2_[_loc5_][this._name] = this;
+      _loc5_ -= 1;
+   }
+};
+Plateforme["extends"](MovieClip);
+Object.registerClass("idPlateforme11_0",Plateforme);
+Object.registerClass("idPlateforme11_1",Plateforme);
+Object.registerClass("idPlateforme11_2",Plateforme);
+Object.registerClass("idPlateforme11_3",Plateforme);
+Object.registerClass("idButte11_0",Plateforme);
+Object.registerClass("idButte11_1",Plateforme);
+Object.registerClass("idButte11_2",Plateforme);
+Object.registerClass("idButte11_3",Plateforme);
+Object.registerClass("idPlateforme12_0",Plateforme);
+Object.registerClass("idPlateforme12_1",Plateforme);
+Object.registerClass("idPlateforme12_2",Plateforme);
+Object.registerClass("idPlateforme12_3",Plateforme);
+Object.registerClass("idButte12_0",Plateforme);
+Object.registerClass("idButte12_1",Plateforme);
+Object.registerClass("idButte12_2",Plateforme);
+Object.registerClass("idButte12_3",Plateforme);
+Object.registerClass("idPlateforme21_0",Plateforme);
+Object.registerClass("idPlateforme21_1",Plateforme);
+Object.registerClass("idPlateforme21_2",Plateforme);
+Object.registerClass("idPlateforme21_3",Plateforme);
+Object.registerClass("idButte21_0",Plateforme);
+Object.registerClass("idButte21_1",Plateforme);
+Object.registerClass("idButte21_2",Plateforme);
+Object.registerClass("idButte21_3",Plateforme);
+Object.registerClass("idButte21_4",Plateforme);
+Object.registerClass("idPlateforme22_0",Plateforme);
+Object.registerClass("idPlateforme22_1",Plateforme);
+Object.registerClass("idPlateforme22_2",Plateforme);
+Object.registerClass("idPlateforme22_3",Plateforme);
+Object.registerClass("idButte22_0",Plateforme);
+Object.registerClass("idButte22_1",Plateforme);
+Object.registerClass("idButte22_2",Plateforme);
+Object.registerClass("idButte22_3",Plateforme);
+Object.registerClass("idPlateforme31_0",Plateforme);
+Object.registerClass("idPlateforme31_1",Plateforme);
+Object.registerClass("idPlateforme31_2",Plateforme);
+Object.registerClass("idPlateforme31_3",Plateforme);
+Object.registerClass("idPlateforme31_4",Plateforme);
+Object.registerClass("idPlateforme31_5",Plateforme);
+Object.registerClass("idPlateforme31_6",Plateforme);
+Object.registerClass("idButte31_0",Plateforme);
+Object.registerClass("idButte31_1",Plateforme);
+Object.registerClass("idButte31_2",Plateforme);
+Object.registerClass("idButte31_3",Plateforme);
+Object.registerClass("idButte31_4",Plateforme);
+Object.registerClass("idButte31_5",Plateforme);
+Object.registerClass("idButte31_6",Plateforme);
+Object.registerClass("idButte31_7",Plateforme);
+Object.registerClass("idButte31_8",Plateforme);
+Object.registerClass("idButte31_9",Plateforme);
+Object.registerClass("idPlateforme32_0",Plateforme);
+Object.registerClass("idPlateforme32_1",Plateforme);
+Object.registerClass("idPlateforme32_2",Plateforme);
+Object.registerClass("idPlateforme32_3",Plateforme);
+Object.registerClass("idPlateforme32_4",Plateforme);
+Object.registerClass("idPlateforme32_5",Plateforme);
+Object.registerClass("idPlateforme32_6",Plateforme);
+Object.registerClass("idButte32_0",Plateforme);
+Object.registerClass("idButte32_1",Plateforme);
+Object.registerClass("idButte32_2",Plateforme);
+Object.registerClass("idButte32_3",Plateforme);
+Object.registerClass("idButte32_4",Plateforme);
+Object.registerClass("idButte32_5",Plateforme);
+Object.registerClass("idButte32_6",Plateforme);
+Object.registerClass("idButte32_7",Plateforme);
+Object.registerClass("idButte32_8",Plateforme);
+Object.registerClass("idButte32_9",Plateforme);
+PlateForme.prototype.callMega = function()
+{
+   lennemis = this.ennemis;
+   for(var _loc2_ in lennemis)
+   {
+      lennemis[_loc2_].beginsearch();
+   }
+};
+PlateForme.prototype.stopMega = function()
+{
+   lennemis = this.ennemis;
+   for(var _loc2_ in lennemis)
+   {
+      lennemis[_loc2_].stopsearch();
+   }
+};
+PlateForme.prototype.addEnnemi = function(pEnnemi)
+{
+   this.ennemis[pEnnemi] = pEnnemi;
+};
+PlateForme.prototype.deleteEnnemi = function(pEnnemi)
+{
+   delete this.ennemis[pEnnemi];
+};
+_global.PlateformeTramp = function()
+{
+   this.mcHit._visible = false;
+   var _loc2_ = this._parent.plateformetramp;
+   var _loc3_;
+   var _loc4_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+      _loc4_ = Math.floor((this._x + this._width) / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+      _loc4_ = Math.floor((this._y + this._height) / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+   var _loc5_ = _loc4_;
+   while(_loc5_ > _loc3_)
+   {
+      if(!_loc2_[_loc5_])
+      {
+         _loc2_[_loc5_] = {};
+      }
+      _loc2_[_loc5_][this._name] = this;
+      _loc5_ -= 1;
+   }
+   this.expand = 13;
+   this.damp = 12;
+};
+PlateformeTramp["extends"](MovieClip);
+PlateformeTramp.prototype.elastic = function()
+{
+   this.mcHit._visible = false;
+   this._parent.game.soundTrampoline.start();
+   this.scale = this._xscale;
+   this.onEnterFrame = function()
+   {
+      this._yscale = this.scale + this.expand;
+      this.expand /= (- this.damp) / 10;
+      if(Math.abs(this.expand) < 1)
+      {
+         delete this.onEnterFrame;
+         this.expand = 12;
+      }
+   };
+};
+Object.registerClass("idTranpoline11",PlateformeTramp);
+Object.registerClass("idTranpoline12",PlateformeTramp);
+Object.registerClass("idTranpoline21",PlateformeTramp);
+Object.registerClass("idTranpoline22",PlateformeTramp);
+Object.registerClass("idTranpoline31",PlateformeTramp);
+Object.registerClass("idTranpoline32",PlateformeTramp);
+_global.PlateformeMove = function()
+{
+   this.mcHit._visible = false;
+   this._visible = false;
+   var _loc2_ = this._parent.plateformemove;
+   var _loc3_;
+   var _loc4_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+      _loc4_ = Math.floor((this._x + this._width) / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+      _loc4_ = Math.floor((this._y + this._height) / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+   var _loc5_ = _loc4_;
+   while(_loc5_ > _loc3_)
+   {
+      if(!_loc2_[_loc5_])
+      {
+         _loc2_[_loc5_] = {};
+      }
+      _loc2_[_loc5_][this._name] = this;
+      _loc5_ -= 1;
+   }
+   this.posX = this._x;
+   if(Math.Random < 0.5)
+   {
+      this.moveHor = 5;
+   }
+   else
+   {
+      this.moveHor = -5;
+   }
+   this.largeur = this._width * 2;
+};
+PlateformeMove["extends"](MovieClip);
+Object.registerClass("idPlateformeMH11_0",PlateformeMove);
+Object.registerClass("idPlateformeMH11_1",PlateformeMove);
+Object.registerClass("idPlateformeMH12_0",PlateformeMove);
+Object.registerClass("idPlateformeMH12_1",PlateformeMove);
+Object.registerClass("idPlateformeMH21_0",PlateformeMove);
+Object.registerClass("idPlateformeMH21_1",PlateformeMove);
+Object.registerClass("idPlateformeMH22_0",PlateformeMove);
+Object.registerClass("idPlateformeMH22_1",PlateformeMove);
+Object.registerClass("idPlateformeMH31_0",PlateformeMove);
+Object.registerClass("idPlateformeMH31_1",PlateformeMove);
+Object.registerClass("idPlateformeMH32_0",PlateformeMove);
+Object.registerClass("idPlateformeMH32_1",PlateformeMove);
+PlateformeMove.prototype.move = function()
+{
+   if(this._x > this.posX + this.largeur)
+   {
+      this.moveHor = -5;
+   }
+   else if(this._x < this.posX)
+   {
+      this.moveHor = 5;
+   }
+   this._x += this.moveHor;
+};
+PlateFormeMove.prototype.go = function()
+{
+   if(!this._visible)
+   {
+      this._visible = true;
+      this.onEnterFrame = this.move;
+   }
+};
+PlateFormeMove.prototype.pause = function()
+{
+   this.onEnterFrame = null;
+};
+PlateFormeMove.prototype.restart = function()
+{
+   this.onEnterFrame = this.move;
+};
+PlateFormeMove.prototype.stop = function()
+{
+   this._visible = false;
+   this.onEnterFrame = null;
+};
+_global.PlateformeVert = function()
+{
+   this.mcHit._visible = false;
+   this._visible = false;
+   var _loc2_ = this._parent.plateformevert;
+   var _loc3_;
+   var _loc4_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+      _loc4_ = Math.floor((this._x + this._width) / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+      _loc4_ = Math.floor((this._y + this._height) / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+   var _loc5_ = _loc4_;
+   while(_loc5_ > _loc3_)
+   {
+      if(!_loc2_[_loc5_])
+      {
+         _loc2_[_loc5_] = {};
+      }
+      _loc2_[_loc5_][this._name] = this;
+      _loc5_ -= 1;
+   }
+   this.posY = this._y;
+   if(this._name.substr(0,2) == "UP")
+   {
+      this.hauteur = -100;
+      this.moveVer = -5;
+      this.up = true;
+   }
+   else
+   {
+      this.moveVer = 5;
+      this.hauteur = 100;
+   }
+};
+PlateformeVert["extends"](MovieClip);
+Object.registerClass("idPlateformeMV11_0",PlateformeVert);
+Object.registerClass("idPlateformeMV11_1",PlateformeVert);
+Object.registerClass("idPlateformeMV12_0",PlateformeVert);
+Object.registerClass("idPlateformeMV12_1",PlateformeVert);
+Object.registerClass("idPlateformeMV21_0",PlateformeVert);
+Object.registerClass("idPlateformeMV21_1",PlateformeVert);
+Object.registerClass("idPlateformeMV22_0",PlateformeVert);
+Object.registerClass("idPlateformeMV22_1",PlateformeVert);
+Object.registerClass("idPlateformeMV31_0",PlateformeVert);
+Object.registerClass("idPlateformeMV31_1",PlateformeVert);
+Object.registerClass("idPlateformeMV32_0",PlateformeVert);
+Object.registerClass("idPlateformeMV32_1",PlateformeVert);
+PlateformeVert.prototype.move = function()
+{
+   if(this.up)
+   {
+      if(this._y <= this.posY + this.hauteur)
+      {
+         this.moveVer = 5;
+      }
+      else if(this._y >= this.posY)
+      {
+         this.moveVer = -5;
+      }
+   }
+   else if(this._y >= this.posY + this.hauteur)
+   {
+      this.moveVer = -5;
+   }
+   else if(this._y <= this.posY)
+   {
+      this.moveVer = 5;
+   }
+   this._y += this.moveVer;
+};
+PlateFormeVert.prototype.go = function()
+{
+   if(!this._visible)
+   {
+      this._visible = true;
+      this.onEnterFrame = this.move;
+   }
+};
+PlateFormeVert.prototype.stop = function()
+{
+   this._visible = false;
+   this.onEnterFrame = null;
+};
+PlateFormeVert.prototype.pause = function()
+{
+   this.onEnterFrame = null;
+};
+PlateFormeVert.prototype.restart = function()
+{
+   this.onEnterFrame = this.move;
+};
+_global.Mur = function()
+{
+   this.mcHit._visible = false;
+   var _loc2_ = this._parent.wall;
+   this.ennemis = new Object();
+   var _loc3_;
+   var _loc4_;
+   if(this._parent.target.engine == 1)
+   {
+      _loc3_ = Math.floor(this._x / 640);
+      _loc4_ = Math.floor((this._x + this._width) / 640);
+   }
+   else
+   {
+      _loc3_ = Math.floor(this._y / 480);
+      _loc4_ = Math.floor((this._y + this._height) / 480);
+   }
+   if(!_loc2_[_loc3_])
+   {
+      _loc2_[_loc3_] = {};
+   }
+   _loc2_[_loc3_][this._name] = this;
+   var _loc5_ = _loc4_;
+   while(_loc5_ > _loc3_)
+   {
+      if(!_loc2_[_loc5_])
+      {
+         _loc2_[_loc5_] = {};
+      }
+      _loc2_[_loc5_][this._name] = this;
+      _loc5_ -= 1;
+   }
+};
+Mur["extends"](MovieClip);
+Object.registerClass("idBloc11_0",Mur);
+Object.registerClass("idBloc11_1",Mur);
+Object.registerClass("idBloc11_2",Mur);
+Object.registerClass("idBloc11_3",Mur);
+Object.registerClass("idBloc12_0",Mur);
+Object.registerClass("idBloc12_1",Mur);
+Object.registerClass("idBloc12_2",Mur);
+Object.registerClass("idBloc12_3",Mur);
+Object.registerClass("idBloc21_0",Mur);
+Object.registerClass("idBloc21_1",Mur);
+Object.registerClass("idBloc21_2",Mur);
+Object.registerClass("idBloc22_0",Mur);
+Object.registerClass("idBloc22_1",Mur);
+Object.registerClass("idBloc22_2",Mur);
+Object.registerClass("idBloc22_3",Mur);
+Object.registerClass("idBloc24_boss",Mur);
+Object.registerClass("idBloc31_0",Mur);
+Object.registerClass("idBloc31_1",Mur);
+Object.registerClass("idBloc31_2",Mur);
+Object.registerClass("idBloc31_3",Mur);
+Object.registerClass("idBloc31_4",Mur);
+Object.registerClass("idBloc32_0",Mur);
+Object.registerClass("idBloc32_1",Mur);
+Object.registerClass("idBloc32_2",Mur);
+Object.registerClass("idBloc32_3",Mur);
+Object.registerClass("idBloc32_4",Mur);
+Object.registerClass("idBloc34_boss",Mur);
+Mur.prototype.callMega = function()
+{
+   lennemis = this.ennemis;
+   for(var _loc2_ in lennemis)
+   {
+      lennemis[_loc2_].beginsearch();
+   }
+};
+Mur.prototype.stopMega = function()
+{
+   lennemis = this.ennemis;
+   for(var _loc2_ in lennemis)
+   {
+      lennemis[_loc2_].stopsearch();
+   }
+};
+Mur.prototype.addEnnemi = function(pEnnemi)
+{
+   this.ennemis[pEnnemi] = pEnnemi;
+};
+Mur.prototype.deleteEnnemi = function(pEnnemi)
+{
+   delete this.ennemis[pEnnemi];
+};
+_global.Perso = function()
+{
+   this.maxX = 10;
+   this.maxY = 6;
+   this.acc = 5;
+   this.speedX = 0;
+   this.speedY = 0;
+   this.easeX = 1;
+   this.easeY = 1.02;
+   this.changeX = 1;
+   this.jumpSpeed = 6;
+   this.inertia = 1.15;
+   this.fallMax = 100;
+   this.size = 100;
+   this.timeatloose = null;
+   this.timetoloose = 3000;
+   this.hurt = this.onHurt;
+   this.ontouchstatus = null;
+   this.status = null;
+   this.current_zone = null;
+   this.lastpiege = null;
+   this.speedFall = 0.5;
+   this.dir = 1;
+   this.nohit;
+   this.canjump = true;
+   this.oldmoveHor = null;
+   this.frameafterpause = null;
+   this.canshoot = true;
+   this.delay = 500;
+   this.munitions = 0;
+   this.maxmunition;
+   this.derapage = false;
+   this.onPiege = false;
+   this.posX = this._x;
+   this.posY = this._y;
+   this.deltaX = 200;
+   this.scrollingX = false;
+   this.scrollingX = false;
+   this.deltaY = 50;
+   this.fallY = 0;
+   this.force = 3;
+   this.canrigth = true;
+   this.canleft = true;
+   this.mcPied._visible = false;
+   this.mcCol._visible = false;
+};
+Perso["extends"](MovieClip);
+Object.registerClass("idActiman",Perso);
+Perso.prototype.move = function()
+{
+   this.fallY = 0;
+   var _loc2_ = this.initZone();
+   this.sens = this._xscale;
+   this.speedX /= 1.4;
+   if(this.speedX != 0)
+   {
+      this.acc /= this.inertia;
+   }
+   if(this.acc < 1.7)
+   {
+      this.acc = 1.7;
+   }
+   this.CollWallMove(_loc2_);
+   this.CollPiegeMove(_loc2_);
+   if(!this.testPolio())
+   {
+      if(Key.isDown(Game.LEFT) && this.canleft)
+      {
+         if(this.speedX == 0)
+         {
+            this.speedX = -1 * this.acc;
+            if(this._xscale == 100)
+            {
+               this.speedX = -1;
+               this._xscale = -100;
+               this.dir = -1;
+            }
+            if(!this.onPiege)
+            {
+               this.gotoAndStop("run");
+            }
+         }
+         else if(this.dir == 1 && this.canrigth)
+         {
+            this.speedX /= 1.5;
+            this.derapage = true;
+            if(this.speedX < 1)
+            {
+               this.acc = 5;
+               this._xscale = - this.size;
+               this.dir = -1;
+               this.derapage = false;
+               this.gotoAndStop("run");
+            }
+            else
+            {
+               this.gotoAndStop("slide");
+            }
+         }
+         else
+         {
+            if(!this.canrigth)
+            {
+               this._xscale = - this.size;
+            }
+            this.speedX *= this.acc;
+            this.speedX >= - this.maxX ? (this.speedX = this.speedX) : (this.speedX = - this.maxX);
+            if(!this.onPiege)
+            {
+               this.gotoAndStop("run");
+            }
+         }
+      }
+      else if(Key.isDown(Game.RIGHT) && this.canrigth)
+      {
+         if(this.speedX == 0)
+         {
+            this.speedX = 1 * this.acc;
+            if(this._xscale == -100)
+            {
+               this.speedX = 1;
+               this._xscale = 100;
+               this.dir = 1;
+            }
+            if(!this.onPiege)
+            {
+               this.gotoAndStop("run");
+            }
+         }
+         else if(this.dir == -1 && this.canleft)
+         {
+            this.speedX /= 1.5;
+            this.derapage = true;
+            if(this.speedX > -1)
+            {
+               this.acc = 5;
+               this._xscale = this.size;
+               this.derapage = false;
+               this.dir = 1;
+               this.gotoAndStop("run");
+            }
+            else
+            {
+               this.gotoAndStop("slide");
+            }
+         }
+         else
+         {
+            if(!this.canleft)
+            {
+               this._xscale = this.size;
+            }
+            this.speedX *= this.acc;
+            this.speedX <= this.maxX ? (this.speedX = this.speedX) : (this.speedX = this.maxX);
+            if(!this.onPiege)
+            {
+               this.gotoAndStop("run");
+            }
+         }
+      }
+   }
+   if(!this.status.mcHit.hitTest(this.mcPied))
+   {
+      this.gotoAndStop("jump");
+      this.onEnterFrame = this.fall;
+   }
+   if(Math.abs(this.speedX) < 1)
+   {
+      this.speedX = 0;
+      this.acc = 5;
+      if(this.derapage == true)
+      {
+         this._xscale = - this._xscale;
+         this.derapage = false;
+         this.dir = - this.dir;
+      }
+      if(!this.onPiege)
+      {
+         this.gotoAndStop("pause");
+      }
+   }
+   if(Key.isDown(Game.UP))
+   {
+      if(this.canjump)
+      {
+         this.gotoAndStop("jump");
+         this.speedX *= 1.5;
+         this.speedY = this.maxY;
+         this.onEnterFrame = this.jump;
+         this.canjump = false;
+      }
+   }
+   else
+   {
+      this.canjump = true;
+   }
+   if(Key.isDown(Game.Action) && this.canshoot && this.munitions > 0)
+   {
+      this.shoot();
+      return true;
+   }
+   if(3478 - this.lastshoot > this.delay && !Key.isDown(Game.Action))
+   {
+      this.canshoot = true;
+   }
+   this.CollEnnemiMove();
+   this.CollBossMove();
+   this.scrollY();
+   this.scrollMove();
+   this.scrollYUp();
+   if(Key.isDown(Game.PAUSE))
+   {
+      this.pause();
+   }
+   this.CollBonus(_loc2_);
+   this.onPopup();
+   this.onBossLost();
+};
+Perso.prototype.moveonPfMove = function()
+{
+   var _loc2_ = false;
+   if(this.oldMovHor != this.status.moveHor)
+   {
+      if(this.oldMovHor != null)
+      {
+         _loc2_ = true;
+      }
+      this.oldMovHor = this.status.moveHor;
+   }
+   this.fallY = 0;
+   this.speedX = 0;
+   var _loc3_ = this.initZone();
+   this.sens = this._xscale;
+   this.speedX /= this.inertia;
+   this.acc /= this.inertia;
+   this.CollBossMove();
+   if(Key.isDown(Game.LEFT))
+   {
+      if(this.speedX == 0)
+      {
+         this.speedX = -1;
+      }
+      if(this.dir == 1)
+      {
+         this.speedX /= this.acc;
+         this._xscale = - this.size;
+         this.dir = -1;
+      }
+      else
+      {
+         this.speedX = - this.maxX;
+         this.gotoAndStop("run");
+      }
+   }
+   else if(Key.isDown(Game.RIGHT))
+   {
+      if(this.speedX == 0)
+      {
+         this.speedX = 1;
+      }
+      if(this.dir == -1)
+      {
+         this.dir = 1;
+         this.speedX /= this.acc;
+         this._xscale = this.size;
+      }
+      else
+      {
+         this.speedX = this.maxX;
+         this.gotoAndStop("run");
+      }
+   }
+   this.testPolio();
+   if(Key.isDown(Game.Action) && this.canshoot && this.munitions > 0)
+   {
+      this.shoot();
+   }
+   else if(8142 - this.lastshoot > this.delay && !Key.isDown(Game.Action))
+   {
+      this.canshoot = true;
+   }
+   if(!this.status.mcHit.hitTest(this.mcPied))
+   {
+      this.gotoAndStop("jump");
+      this.onEnterFrame = this.fall;
+   }
+   if(Math.abs(this.speedX) < 1)
+   {
+      this.speedX = this.status.moveHor;
+      this.gotoAndStop("pause");
+   }
+   if(this.acc < 1.5)
+   {
+      this.acc = 1.5;
+   }
+   if(!this.status.mcHit.hitTest(this.mcPied))
+   {
+      this.gotoAndStop("jump");
+      this.oldMoveHor = null;
+      this.onEnterFrame = this.fall;
+   }
+   this.scrollY();
+   this.scrollYUp();
+   if(this.engine == 1)
+   {
+      if(_loc2_)
+      {
+         this.x += this.status.moveHor;
+         this._x += this.status.moveHor;
+         this.target.move();
+      }
+      else
+      {
+         this.scrollMove();
+      }
+   }
+   else
+   {
+      this.scrollMove();
+   }
+   if(Key.isDown(Game.UP))
+   {
+      if(this.canjump)
+      {
+         this.gotoAndStop("jump");
+         this.speedX *= 1.5;
+         this.speedY = this.maxY;
+         this.onEnterFrame = this.jump;
+      }
+      this.canjump = false;
+   }
+   else
+   {
+      this.canjump = true;
+   }
+   if(Key.isDown(Game.PAUSE))
+   {
+      this.pause();
+   }
+   this.CollBonus(_loc3_);
+   this.onPopup();
+};
+Perso.prototype.moveonPfVert = function()
+{
+   this.fallY = 0;
+   var _loc2_ = this.initZone();
+   this.sens = this._xscale;
+   this.speedX /= 1.4;
+   if(this.speedX != 0)
+   {
+      this.acc /= this.inertia;
+   }
+   if(this.acc < 1.7)
+   {
+      this.acc = 1.7;
+   }
+   this.CollBossMove();
+   if(Key.isDown(Game.LEFT))
+   {
+      if(this.speedX == 0)
+      {
+         this.speedX = -1;
+      }
+      if(this.dir == 1)
+      {
+         this.speedX /= 1.5;
+         this.derapage = true;
+         if(this.speedX < 1)
+         {
+            this.acc = 5;
+            this._xscale = - this.size;
+            this.dir = -1;
+            this.canleft = true;
+            this.derapage = false;
+            this.gotoAndStop("run");
+         }
+         else
+         {
+            this.gotoAndStop("slide");
+         }
+      }
+      else
+      {
+         this._xscale = - this.size;
+         this.speedX *= this.acc;
+         this.speedX >= - this.maxX ? (this.speedX = this.speedX) : (this.speedX = - this.maxX);
+         this.gotoAndStop("run");
+      }
+   }
+   else if(Key.isDown(Game.RIGHT))
+   {
+      if(this.speedX == 0)
+      {
+         this.speedX = 1;
+      }
+      if(this.dir == -1)
+      {
+         this.speedX /= 1.5;
+         this.derapage = true;
+         if(this.speedX > -1)
+         {
+            this.acc = 5;
+            this._xscale = this.size;
+            this.canrigth = false;
+            this.derapage = false;
+            this.dir = 1;
+            this.gotoAndStop("run");
+         }
+         else
+         {
+            this.gotoAndStop("slide");
+         }
+      }
+      else
+      {
+         this._xscale = this.size;
+         this.speedX *= this.acc;
+         this.speedX <= this.maxX ? (this.speedX = this.speedX) : (this.speedX = this.maxX);
+         this.gotoAndStop("run");
+      }
+   }
+   this.testPolio();
+   if(Math.abs(this.speedX) < 1)
+   {
+      this.speedX = 0;
+      this.acc = 5;
+      if(this.derapage == true)
+      {
+         this._xscale = - this._xscale;
+         this.derapage = false;
+         this.dir = - this.dir;
+      }
+      this.gotoAndStop("pause");
+   }
+   if(Key.isDown(Game.Action) && this.canshoot && this.munitions > 0)
+   {
+      this.shoot();
+   }
+   else if(7209 - this.lastshoot > this.delay && !Key.isDown(Game.Action))
+   {
+      this.canshoot = true;
+   }
+   this.scrollY();
+   this.scrollMove();
+   this.scrollYUp();
+   if(this.engine == 2)
+   {
+      this.y += this.status.moveVer;
+      this.target.move();
+   }
+   this._y = - this.y + this.posY + this.target.posY + this.status._y;
+   if(!this.status.mcHit.hitTest(this.mcPied))
+   {
+      this.gotoAndStop("jump");
+      this.onEnterFrame = this.fall;
+   }
+   if(Key.isDown(Game.UP))
+   {
+      if(this.canjump)
+      {
+         this.gotoAndStop("jump");
+         this.speedX *= 1.5;
+         this.speedY = this.maxY;
+         this.onEnterFrame = this.jump;
+         this.canjump = false;
+      }
+   }
+   else
+   {
+      this.canjump = true;
+   }
+   if(Key.isDown(Game.PAUSE))
+   {
+      this.pause();
+   }
+   this.CollBonus(_loc2_);
+   this.onPopup();
+};
+Perso.prototype.onTouch = function()
+{
+   this.fallY = 0;
+   var _loc2_ = this.initZone();
+   this.speedX /= this.inertia;
+   this.CollWallMove(_loc2_);
+   if(Math.abs(this.speedX) < 4)
+   {
+      this.gotoAndStop("pause");
+   }
+   if(Math.abs(this.speedX) < 1)
+   {
+      this.speedX = - this.speedX;
+      this.onEnterFrame = this.move;
+   }
+   this.scrollMove();
+   this.scrollY();
+   if(!this.status.mcHit.hitTest(this.mcPied))
+   {
+      this.ontouchstatus = this.status;
+      this.onEnterFrame = this.fall;
+   }
+   if(Key.isDown(Game.PAUSE))
+   {
+      this.pause();
+   }
+   if(!Key.isDown(Game.UP))
+   {
+      this.canjump = true;
+   }
+};
+Perso.prototype.jump = function()
+{
+   if(Math.abs(this.speedX) > this.maxX)
+   {
+      this.speedX = this.maxX * this.dir;
+   }
+   var _loc2_ = this.initZone();
+   this._y -= this.speedY * this.jumpSpeed;
+   this.speedY -= this.easeY;
+   this.speedX /= this.easeX;
+   if(Key.isDown(Game.LEFT))
+   {
+      this._xscale = - this.size;
+      this.dir = -1;
+      if(this.speedX > 0)
+      {
+         this.speedX = -1;
+      }
+      else
+      {
+         if(this.speedX == 0)
+         {
+            this.speedX = -1;
+         }
+         this.speedX *= this.acc;
+         this.speedX >= - this.maxX ? (this.speedX = this.speedX) : (this.speedX = - this.maxX);
+      }
+   }
+   else if(Key.isDown(Game.RIGHT))
+   {
+      this._xscale = this.size;
+      this.dir = 1;
+      if(this.speedX < 0)
+      {
+         this.speedX = 1;
+      }
+      else
+      {
+         if(this.speedX == 0)
+         {
+            this.speedX = 1;
+         }
+         this.speedX *= this.acc;
+         this.speedX <= this.maxX ? (this.speedX = this.speedX) : (this.speedX = this.maxX);
+      }
+   }
+   if(!Key.isDown(Game.UP))
+   {
+      this.canjump = true;
+      this.speedY -= this.easeY;
+      this.speedX /= this.easeX;
+   }
+   this.CollWallJump(_loc2_);
+   if(this.speedY < 1)
+   {
+      this.speedY = 1;
+      this.onEnterFrame = this.fall;
+   }
+   this.scrollMove();
+   this.scrollJump();
+   this.CollBonus(_loc2_);
+   this.CollBossJump();
+};
+Perso.prototype.onMicelle = function()
+{
+   var _loc2_ = this.initZone();
+   this._x += (5 + Math.abs(this.speedX)) * Math.sin(this.angle);
+   this._y -= 10;
+   this.speedX /= 1.08;
+   if(this.y + this._y - this.target.posY - this.posY < 0)
+   {
+      this.speedY = 0;
+      this.speedX = 0;
+   }
+   if(this.CollWallJump(_loc2_))
+   {
+      this.game.soundMicelle.start();
+   }
+   this._y += this.speedY;
+   this.y -= this.speedY;
+   this.target.move();
+   this.angle += 0.5;
+   if(this.speedY < 1)
+   {
+      this.speedY = 1;
+      this.fallY = 0;
+      this.goToAndStop("jump");
+      this.onEnterFrame = this.fall;
+   }
+   if(!Key.isDown(Game.UP))
+   {
+      this.canjump = true;
+   }
+};
+Perso.prototype.fall = function()
+{
+   var _loc2_ = this.initZone();
+   this.speedX /= this.easeX;
+   this.mcPied._height = this.speedY * this.jumpSpeed;
+   this.mcCol._height = this.speedY * this.jumpSpeed;
+   if(!Key.isDown(Game.UP))
+   {
+      this.canjump = true;
+   }
+   if(Key.isDown(Game.LEFT))
+   {
+      this._xscale = - this.size;
+      this.dir = -1;
+      if(this.speedX > 0)
+      {
+         this.speedX = -1;
+      }
+      else
+      {
+         this.speedX != 0 ? (this.speedX = this.speedX) : (this.speedX = -1);
+         this.speedX *= this.acc;
+         this.speedX >= - this.maxX ? (this.speedX = this.speedX) : (this.speedX = - this.maxX);
+      }
+   }
+   else if(Key.isDown(Game.RIGHT))
+   {
+      this._xscale = this.size;
+      this.dir = 1;
+      if(this.speedX < 0)
+      {
+         this.speedX = 1;
+      }
+      else
+      {
+         this.speedX != 0 ? (this.speedX = this.speedX) : (this.speedX = 1);
+         this.speedX *= this.acc;
+         if(this.speedX > this.maxX)
+         {
+            this.speedX = this.maxX;
+         }
+      }
+   }
+   this.CollPlFormeFall(_loc2_);
+   this.CollPlFormeTrampFall(_loc2_);
+   this.CollPlFormeMoveFall(_loc2_);
+   this.CollPlFormeVertFall(_loc2_);
+   this.CollWallFall(_loc2_);
+   this.CollEnnemiFall(_loc2_);
+   this.CollBossFall();
+   this.scrollMove();
+   this.scrollFall();
+   this.CollBonus(_loc2_);
+   this.speedY = this.speedY <= this.fallMax ? this.speedY + this.easeY : this.fallMax;
+};
+Perso.prototype.onHurt = function()
+{
+   this.hurt = null;
+   this._alpha = 50;
+   this.force--;
+   this.gotoAndStop("perd");
+   if(this.force <= 0)
+   {
+      this.game.speedTime = 0;
+      this.game.soundLostLife.start();
+      this.timeatloose = 5422;
+      this.posYloose = this._y;
+      this.onEnterFrame = this.lostUp;
+   }
+   else
+   {
+      if(this.onTouch != null)
+      {
+         this.onEnterFrame = this.onTouch;
+      }
+      this.game.soundLostForce.start();
+      this.createEmptyMovieClip("mcInvincibility",0);
+      this.invincibilityTime = 10618;
+      this.mcInvincibility.onEnterFrame = function()
+      {
+         var _loc2_ = this._parent;
+         var _loc3_ = 10155 - _loc2_.invincibilityTime - _loc2_.invincibility;
+         if(_loc3_ > 1500)
+         {
+            _loc2_._visible = true;
+            _loc2_.hurt = _loc2_.onHurt;
+            this.remove();
+         }
+         else if(_loc3_ > 0)
+         {
+            _loc2_._alpha = 100;
+            _loc2_._visible = !_loc2_._visible;
+         }
+      };
+   }
+   _root.mcConsole.mcForce.nextFrame();
+};
+Perso.prototype.onShield = function()
+{
+   this.hurt = null;
+   this._alpha = 100;
+   this._visible = true;
+   new Color(this).setTransform({rb:128,gb:128,bb:255});
+   this.createEmptyMovieClip("mcInvincibility",0);
+   this.invincibilityTime = 10949;
+   this.mcInvincibility.onEnterFrame = function()
+   {
+      var _loc2_ = this._parent;
+      var _loc3_ = 8531 - _loc2_.invincibilityTime - _loc2_.invincibility * 4;
+      if(_loc3_ > 1500)
+      {
+         new Color(_loc2_).setTransform({rb:0,gb:0,bb:0});
+         _loc2_._visible = true;
+         _loc2_.hurt = _loc2_.onHurt;
+         this.remove();
+      }
+      else if(_loc3_ > 0)
+      {
+         _loc2_._visible = !_loc2_._visible;
+      }
+   };
+};
+Perso.prototype.lostUp = function()
+{
+   if(this._y > this.posYloose - this._height)
+   {
+      this._y -= 15;
+   }
+   else
+   {
+      this.onEnterFrame = this.lostDown;
+   }
+};
+Perso.prototype.lostDown = function()
+{
+   this._y += 10;
+   if(10346 - this.timeatloose > this.timetoloose)
+   {
+      this.onEnterFrame = null;
+      this.game.replay("lost");
+   }
+};
+Perso.prototype.testloose = function()
+{
+   if(this.timeatloose != null)
+   {
+      this.onEnterFrame = null;
+      this._visible = true;
+      this.invincibility = false;
+      this.posYloose = this._y;
+      this.onEnterFrame = this.lostUp;
+      this.gotoAndStop("perd");
+   }
+};
+Perso.prototype.CollBonus = function(pZone)
+{
+   var _loc3_ = this.target.bonus[pZone];
+   for(var _loc4_ in _loc3_)
+   {
+      if(_loc3_[_loc4_].hitTest(this))
+      {
+         _loc3_[_loc4_].onHit();
+      }
+   }
+};
+Perso.prototype.CollWallMove = function(pZone)
+{
+   var _loc3_ = false;
+   var _loc4_ = this.target.wall[pZone];
+   var _loc5_ = null;
+   for(var _loc6_ in _loc4_)
+   {
+      if(_loc4_[_loc6_] != this.status && _loc4_[_loc6_].hitTest(this._x,this._y))
+      {
+         _loc5_ = _loc4_[_loc6_];
+         _loc3_ = true;
+         this.acc = 5;
+         this.speedX = 0;
+         if(_loc5_._x + _loc5_._width / 2 + this.posX + this.target.posX - this.x < this._x)
+         {
+            this.canleft = false;
+         }
+         else
+         {
+            this.canrigth = false;
+         }
+      }
+   }
+   if(!_loc3_)
+   {
+      this.canleft = true;
+      this.canrigth = true;
+   }
+   else
+   {
+      this.canshoot = false;
+   }
+};
+Perso.prototype.CollPiegeMove = function(pZone)
+{
+   var _loc3_ = false;
+   var _loc4_ = this.target.trap[pZone];
+   for(var _loc5_ in _loc4_)
+   {
+      if(_loc4_[_loc5_].hitTest(this._x,this._y))
+      {
+         _loc4_[_loc5_].onHit();
+         if(this.lastpiege != _loc4_[_loc5_])
+         {
+            this.lastpiege.onExit();
+            this.lastpiege = _loc4_[_loc5_];
+         }
+         this.acc = 1.5;
+         this.speedX = this.dir * Math.floor(Math.abs(this.speedX) / 1.5);
+         _loc3_ = true;
+         ltouched = true;
+      }
+   }
+   this.onPiege = _loc3_;
+   if(!_loc3_)
+   {
+      if(this.lastpiege != null)
+      {
+         this.lastpiege.onExit();
+         this.lastpiege = null;
+      }
+   }
+   else
+   {
+      this.gotoAndStop("turbo");
+   }
+};
+Perso.prototype.CollBossMove = function()
+{
+   if(this.hitTest(this.target.mcBoss.mcHurt) && this.target.mcBoss.hurt && this.hurt != null)
+   {
+      this.hurt();
+   }
+};
+Perso.prototype.CollMaxiBeurkMove = function()
+{
+   var _loc2_ = this.status.ennemis;
+   for(_loc3_ in _loc2_)
+   {
+      if(this.hitTest(_loc2_[_loc3_]) && !_loc2_[_loc3_].isDizzy && this.hurt != null)
+      {
+         if(_loc2_[_loc3_]._x + this.posX + this.target.posX - this.x < this._x)
+         {
+            this.speedX = this.maxX;
+         }
+         else
+         {
+            this.speedX = - this.maxX;
+         }
+         if(this.speedX * this._xscale > 0)
+         {
+            this._xscale = - this._xscale;
+            this.dir = - this.dir;
+         }
+         this.hurt();
+         return true;
+      }
+   }
+};
+Perso.prototype.CollEnzymeMove = function()
+{
+   var _loc2_ = this.status.ennemis;
+   if(this.hurt != null)
+   {
+      for(_loc3_ in _loc2_)
+      {
+         if(this.hitTest(_loc2_[_loc3_]) && !_loc2_[_loc3_].isDizzy)
+         {
+            if(_loc2_[_loc3_]._x + this.posX + this.target.posX - this.x <= this._x)
+            {
+               this.speedX = this.maxX;
+               this._x = _loc2_[_loc3_]._x + this.posX + this.target.posX - this.x + 20;
+            }
+            else
+            {
+               this.speedX = - this.maxX;
+               this._x = _loc2_[_loc3_]._x + this.posX + this.target.posX - this.x - 20;
+            }
+            if(this.speedX * this._xscale > 0)
+            {
+               this._xscale = - this._xscale;
+               this.dir = - this.dir;
+            }
+            this.gotoAndStop("perd");
+            if(_loc2_[_loc3_].piege)
+            {
+               this.hurt();
+               this.game.soundMarais.start();
+            }
+            else
+            {
+               this.onEnterFrame = this.onTouch;
+            }
+            return true;
+         }
+      }
+   }
+};
+Perso.prototype.CollWallJump = function(pZone)
+{
+   var _loc3_ = this.target.wall[pZone];
+   for(var _loc4_ in _loc3_)
+   {
+      if(this.hitTest(_loc3_[_loc4_]))
+      {
+         if(_loc3_[_loc4_].hitTest(this._x,this._y - this._height))
+         {
+            this.speedY = 0;
+            this.speedX = 0;
+            return true;
+         }
+      }
+   }
+};
+Perso.prototype.CollBossJump = function()
+{
+   if(this.hitTest(this.target.mcBoss.mcHurt) && this.target.mcBoss.hurt)
+   {
+      this.hurt();
+   }
+};
+Perso.prototype.CollEnnemisJump = function(pZone)
+{
+};
+Perso.prototype.CollWallFall = function(pZone)
+{
+   var _loc3_ = this.target.wall[pZone];
+   var _loc4_;
+   for(var _loc5_ in _loc3_)
+   {
+      if(this.mcPied.hitTest(_loc3_[_loc5_].mcHit) && _loc3_[_loc5_] != this.ontouchstatus)
+      {
+         this.ontouchstatus = null;
+         this.mcPied._height = 0;
+         this.mcCol._height = 0;
+         this.acc = 5;
+         this.speedX *= this.speedFall;
+         this.speedX != 0 ? this.speedX : 1;
+         if(this.speedX * this._xscale < 0)
+         {
+            this.speedX = 0;
+            this.dir = - this.dir;
+         }
+         this._y = - this.y + this.posY + this.target.posY + lWall[_loc5_]._y;
+         if(this.status != lWall[_loc5_])
+         {
+            this.status.stopMega();
+            this.status = lWall[_loc5_];
+            this.status.callMega();
+         }
+         this.status = _loc3_[_loc5_];
+         this.speedY = 0;
+         this.onEnterFrame = this.move;
+         this.gotoAndStop("run");
+         return true;
+      }
+      if(this.hitTest(_loc3_[_loc5_]))
+      {
+         _loc4_ = _loc3_[_loc5_];
+         if(_loc4_._x + _loc4_._width / 2 + this.posX + this.target.posX - this.x < this._x && this.speedX <= 0)
+         {
+            this.speedX = 0;
+         }
+         else if(_loc4_._x + _loc4_._width / 2 + this.posX + this.target.posX - this.x > this._x && this.speedX >= 0)
+         {
+            this.speedX = 0;
+         }
+      }
+   }
+};
+Perso.prototype.CollPlFormeFall = function(pZone)
+{
+   var _loc3_ = this.target.plateforme[pZone];
+   for(_loc4_ in _loc3_)
+   {
+      if(this.mcPied.hitTest(_loc3_[_loc4_].mcHit) && _loc3_[_loc4_] != this.ontouchstatus)
+      {
+         this.ontouchstatus = null;
+         this.speedX *= this.speedFall;
+         this.mcPied._height = 0;
+         this.mcCol._height = 0;
+         this.acc = 5;
+         this._y = - this.y + this.posY + this.target.posY + lPlateforme[_loc4_]._y;
+         if(this.status != _loc3_[_loc4_])
+         {
+            this.status.stopMega();
+            this.status = _loc3_[_loc4_];
+            this.status.callMega();
+         }
+         this.speedX != 0 ? this.speedX : 1;
+         if(this.speedX * this._xscale < 0)
+         {
+            this.speedX = 0;
+            this.dir = - this.dir;
+         }
+         this.speedY = 0;
+         this.onEnterFrame = this.move;
+         this.gotoAndStop("run");
+         return true;
+      }
+   }
+};
+Perso.prototype.CollPlFormeTrampFall = function(pZone)
+{
+   var _loc3_ = this.target.plateformetramp[pZone];
+   for(var _loc4_ in _loc3_)
+   {
+      if(this.mcPied.hitTest(_loc3_[_loc4_].mcHit))
+      {
+         if(this.speedX == 0)
+         {
+            this.speedX = 1;
+         }
+         if(this.speedX * this._xscale < 0)
+         {
+            this.speedX = 0;
+            this.dir = - this.dir;
+         }
+         this.fallY = 0;
+         _loc3_[_loc4_].elastic();
+         this._y = - this.y + this.posY + this.target.posY + _loc3_[_loc4_]._y - 50;
+         this.mcPied._height = 0;
+         this.mcCol._height = 0;
+         this.speedX = 2 * this.speedX;
+         this.gotoAndStop("jump");
+         this.speedY = 1.1 * this.maxY;
+         this.onEnterFrame = this.jump;
+         return true;
+      }
+   }
+};
+Perso.prototype.CollPlFormeMoveFall = function(pZone)
+{
+   var _loc3_ = this.target.plateformemove[pZone];
+   for(var _loc4_ in _loc3_)
+   {
+      if(this.mcPied.hitTest(_loc3_[_loc4_].mcHit))
+      {
+         this.mcPied._height = 0;
+         this.mcCol._height = 0;
+         this._y = - this.y + this.posY + this.target.posY + _loc3_[_loc4_]._y;
+         if(this.status != lplateforme[_loc4_])
+         {
+            this.status.stopMega();
+            this.status = _loc3_[_loc4_];
+         }
+         this.speedX != 0 ? this.speedX : 1;
+         if(this.speedX * this._xscale < 0)
+         {
+            this.speedX = 0;
+            this.dir = - this.dir;
+         }
+         this.speedY = 0;
+         this.onEnterFrame = this.moveonPfmove;
+         this.gotoAndStop("run");
+         return true;
+      }
+   }
+};
+Perso.prototype.CollPlFormeVertFall = function(pZone)
+{
+   var _loc3_ = this.target.plateformevert[pZone];
+   for(var _loc4_ in _loc3_)
+   {
+      if(this.mcPied.hitTest(_loc3_[_loc4_].mcHit))
+      {
+         this.speedX *= this.speedFall;
+         this.mcPied._height = 0;
+         this.mcCol._height = 0;
+         this._y = - this.y + this.posY + this.target.posY + _loc3_[_loc4_]._y;
+         if(this.status != _loc3_[_loc4_])
+         {
+            this.status.stopMega();
+            this.status = _loc3_[_loc4_];
+         }
+         this.speedX != 0 ? this.speedX : 1;
+         if(this.speedX * this._xscale < 0)
+         {
+            this.speedX = 0;
+            this.dir = - this.dir;
+         }
+         this.speedY = 0;
+         this.onEnterFrame = this.moveonPfvert;
+         this.gotoAndStop("run");
+         return true;
+      }
+   }
+};
+Perso.prototype.CollEnnemiFall = function(pZone)
+{
+   var _loc3_;
+   if(this._xscale * this.dir > 0)
+   {
+      _loc3_ = this.target.ennemis[pZone];
+      for(_loc4_ in _loc3_)
+      {
+         if(this.mcCol.hitTest(_loc3_[_loc4_]) && _loc3_[_loc4_].piege != true)
+         {
+            if(!_loc3_[_loc4_].isDizzy)
+            {
+               this.game.soundDizzy.start();
+               _loc3_[_loc4_].isdizzy = true;
+               _loc3_[_loc4_].timeofshoot = 7582;
+               _loc3_[_loc4_].cantouch = false;
+               _loc3_[_loc4_].gotoAndStop("dizzy");
+               _loc3_[_loc4_].onEnterFrame = _loc3_[_loc4_].onDizzy;
+               this.mcPied._height = 0;
+               this.mcCol._height = 0;
+               this.gotoAndStop("jump");
+               this.speedY = this.maxY / 1.5;
+               this.onEnterFrame = this.jump;
+            }
+            else if(_loc3_[_loc4_].cantouch)
+            {
+               _loc3_[_loc4_].shoot(this.dir);
+               this.gotoAndStop("jump");
+               this.speedY = this.maxY / 2;
+               this.onEnterFrame = this.jump;
+            }
+            return true;
+         }
+      }
+   }
+};
+Perso.prototype.CollEnzymeJump = function(pZone)
+{
+   var _loc3_;
+   if(this.speedX * this.dir > 0)
+   {
+      _loc3_ = this.target.ennemis[pZone];
+      for(var _loc4_ in _loc3_)
+      {
+         if(this.hitTest(_loc3_[_loc4_]) && !_loc3_[_loc4_].isDizzy)
+         {
+            this.speedX = (- this.dir) * this.maxX / 2;
+         }
+      }
+   }
+};
+Perso.prototype.CollBossFall = function()
+{
+   if(this.mccol.hitTest(this.target.mcBoss.mcHit) && this.target.mcBoss.hurt)
+   {
+      this.target.mcBoss.hurt();
+      this.gotoAndStop("jump");
+      this.speedY = this.maxY;
+      this.onEnterFrame = this.jump;
+      this.canjump = false;
+   }
+   else if(this.hitTest(this.target.mcBoss.mcHurt) && this.target.mcBoss.hurt)
+   {
+      this.hurt();
+   }
+};
+Perso.prototype.scrollXMove = function()
+{
+   if(this.scrollingX)
+   {
+      this.x += this.speedX;
+      this.target.move();
+      this.scrollX();
+      if(this._xscale != this.sens)
+      {
+         this.scrollingX = false;
+         this.scrollX = null;
+      }
+   }
+   else
+   {
+      this._x += this.speedX;
+      if(Math.abs(this._x - this.posX) > this.deltaX)
+      {
+         this.scrollingX = true;
+         this.scrollX = this.onScrollingX;
+      }
+      else
+      {
+         this.scrollingX = false;
+         this.scrollX = null;
+      }
+   }
+};
+Perso.prototype.scrollYMove = function()
+{
+   this._x += this.speedX;
+   if(this._x < 10)
+   {
+      this._x = 10;
+      this.speedX = 0;
+   }
+   else if(this._x > 630)
+   {
+      this._x = 630;
+      this.speedX = 0;
+   }
+   this.target.move();
+};
+Perso.prototype.scrollXFall = function()
+{
+   this._y += this.speedY * this.jumpSpeed;
+   this.target.move();
+   if(this._y > 650 && !this.onTime && !this.game.completed)
+   {
+      this.fall = null;
+      this.game.speedTime = 0;
+      this.game.soundLostLife.start();
+      this.onTime = setInterval(this.onFall,this.timetoloose,this);
+   }
+};
+Perso.prototype.scrollYJump = function()
+{
+   if(this._y < 100)
+   {
+      this._y += this.speedY * 6;
+      this.y -= this.speedY * 6;
+      this.target.move();
+   }
+};
+Perso.prototype.scrollYFall = function()
+{
+   if((this.fallY += this.speedY) > this.deltaY)
+   {
+      this.scrollingY = false;
+   }
+   if(this.scrollingY)
+   {
+      this.y += this.speedY * this.jumpSpeed;
+      this.target.move();
+      this.scrollY();
+   }
+   else
+   {
+      this._y += this.speedY * this.jumpSpeed;
+      if(this._y > 400)
+      {
+         this.scrollingY = true;
+         this.scrollY = this.onScrollingY;
+      }
+      else
+      {
+         this.scrollingY = false;
+         this.scrollY = null;
+      }
+   }
+   if(this._y > 640 && !this.onTime && !this.game.completed)
+   {
+      this._visible = false;
+      this.game.soundLostLife.start();
+      clearInterval(this.intervalmicelle);
+      this.scrollingY = false;
+      this.scrollYFall = null;
+      this.onScrollingY = null;
+      this.scrollY = null;
+      this.game.soundLostLife.start();
+      this.CollBonus = null;
+      this.move = null;
+      this.hurt = null;
+      this.onTime = setInterval(this.onFall,this.timetoloose,this);
+   }
+};
+Perso.prototype.onFall = function(pThis)
+{
+   this = pThis;
+   clearInterval(this.onTime);
+   this.game.replay("lost");
+};
+Perso.prototype.onScrollingX = function()
+{
+   if(this.speedX * this._xscale > 0)
+   {
+      if(this._x - this.posX > - this.deltaX + 10 && this._xscale > 0 || this._x - this.posX < this.deltaX - 10 && this._xscale < 0)
+      {
+         if(Math.abs(this.speedX) < 3)
+         {
+            lMove = this.speedX * 3;
+         }
+         else if(this.speedX < 0)
+         {
+            lMove = -9;
+         }
+         else if(this.speedX > 0)
+         {
+            lMove = 9;
+         }
+         this._x -= lMove;
+         this.x += lMove;
+         this.target.move();
+      }
+      else
+      {
+         this.scrollingX = false;
+         this.scrollX = null;
+      }
+   }
+};
+Perso.prototype.onScrollingY = function()
+{
+   if(this._y > 150)
+   {
+      if(this.speedY > 2)
+      {
+         this.y += this.speedY * 10;
+         this._y -= this.speedY * 10;
+      }
+      else
+      {
+         this.y += 20;
+         this._y -= 20;
+      }
+      this.target.move();
+   }
+   else
+   {
+      this.scrollingY = false;
+      this.scrollY = null;
+   }
+};
+Perso.prototype.onScrollingYUp = function()
+{
+   if(this._y < 100)
+   {
+      this.y -= 20;
+      this._y += 20;
+      this.target.move();
+   }
+};
+Perso.prototype.initZone1 = function()
+{
+   var _loc2_ = Math.floor((this._x + this.x - this.posX - this.target.posX) / 640);
+   if(_loc2_ != this.current_zone)
+   {
+      this.current_zone = _loc2_;
+      lennemis = this.target.ennemis[_loc2_ - 2];
+      for(var _loc3_ in lennemis)
+      {
+         lennemis[_loc3_].stop();
+      }
+      lplatevert = this.target.plateformevert[_loc2_ - 2];
+      for(_loc3_ in lplatevert)
+      {
+         lplatevert[_loc3_].stop();
+      }
+      lplatemove = this.target.plateformemove[_loc2_ - 2];
+      for(_loc3_ in lplatemove)
+      {
+         lplatemove[_loc3_].stop();
+      }
+      lennemis = this.target.ennemis[_loc2_ + 2];
+      for(_loc3_ in lennemis)
+      {
+         lennemis[_loc3_].stop();
+      }
+      lplatevert = this.target.plateformevert[_loc2_ + 2];
+      for(_loc3_ in lplatevert)
+      {
+         lplatevert[_loc3_].stop();
+      }
+      lplatemove = this.target.plateformemove[_loc2_ + 2];
+      for(_loc3_ in lplatemove)
+      {
+         lplatemove[_loc3_].stop();
+      }
+      lennemis = this.target.ennemis[_loc2_ + 1];
+      for(_loc3_ in lennemis)
+      {
+         lennemis[_loc3_].go();
+      }
+      lplatevert = this.target.plateformevert[_loc2_ + 1];
+      for(_loc3_ in lplatevert)
+      {
+         lplatevert[_loc3_].go();
+      }
+      lplatemove = this.target.plateformemove[_loc2_ + 1];
+      for(_loc3_ in lplatemove)
+      {
+         lplatemove[_loc3_].go();
+      }
+      lennemis = this.target.ennemis[_loc2_ - 1];
+      for(_loc3_ in lennemis)
+      {
+         lennemis[_loc3_].go();
+      }
+      lplatevert = this.target.plateformevert[_loc2_ - 1];
+      for(_loc3_ in lplatevert)
+      {
+         lplatevert[_loc3_].go();
+      }
+      lplatemove = this.target.plateformemove[_loc2_ - 1];
+      for(_loc3_ in lplatemove)
+      {
+         lplatemove[_loc3_].go();
+      }
+   }
+   return _loc2_;
+};
+Perso.prototype.initZone2 = function()
+{
+   var _loc2_ = Math.floor((this._y + this.y - this.posY - this.target.posY) / 480);
+   if(_loc2_ != this.current_zone)
+   {
+      if(_loc2_ == 1)
+      {
+         this.startMicelle();
+      }
+      this.current_zone = _loc2_;
+      lennemis = this.target.ennemis[_loc2_ - 2];
+      for(var _loc3_ in lennemis)
+      {
+         lennemis[_loc3_].stop();
+      }
+      lplatevert = this.target.plateformevert[_loc2_ - 2];
+      for(_loc3_ in lplatevert)
+      {
+         lplatevert[_loc3_].stop();
+      }
+      lplatemove = this.target.plateformemove[_loc2_ - 2];
+      for(_loc3_ in lplatemove)
+      {
+         lplatemove[_loc3_].stop();
+      }
+      lennemis = this.target.ennemis[_loc2_ + 2];
+      for(_loc3_ in lennemis)
+      {
+         lennemis[_loc3_].stop();
+      }
+      lplatevert = this.target.plateformevert[_loc2_ + 2];
+      for(_loc3_ in lplatevert)
+      {
+         lplatevert[_loc3_].stop();
+      }
+      lplatemove = this.target.plateformemove[_loc2_ + 2];
+      for(_loc3_ in lplatemove)
+      {
+         lplatemove[_loc3_].stop();
+      }
+      lennemis = this.target.ennemis[_loc2_ + 1];
+      for(_loc3_ in lennemis)
+      {
+         lennemis[_loc3_].go();
+      }
+      lplatevert = this.target.plateformevert[_loc2_ + 1];
+      for(_loc3_ in lplatevert)
+      {
+         lplatevert[_loc3_].go();
+      }
+      lplatemove = this.target.plateformemove[_loc2_ + 1];
+      for(_loc3_ in lplatemove)
+      {
+         lplatemove[_loc3_].go();
+      }
+      lennemis = this.target.ennemis[_loc2_ - 1];
+      for(_loc3_ in lennemis)
+      {
+         lennemis[_loc3_].go();
+      }
+      lplatevert = this.target.plateformevert[_loc2_ - 1];
+      for(_loc3_ in lplatevert)
+      {
+         lplatevert[_loc3_].go();
+      }
+      lplatemove = this.target.plateformemove[_loc2_ - 1];
+      for(_loc3_ in lplatemove)
+      {
+         lplatemove[_loc3_].go();
+      }
+   }
+   return _loc2_;
+};
+Perso.prototype.shootWithGunHor = function()
+{
+   Arme.nbproject++;
+   this.munitions -= 1;
+   _root.mcConsole.weapon = this.munitions;
+   this.target.attachMovie("idtir","balle" + Arme.nbproject,Arme.nbproject);
+   this.game.soundFireGun.start();
+   this.target["balle" + Arme.nbproject]._x = - this.target.PosX + this.x + this._x - this.posX + this.dir * this._width / 2;
+   this.target["balle" + Arme.nbproject]._y = this.y + this._y - this.target.posY - this.posY - this._height / 2;
+   this.target["balle" + Arme.nbproject]._xscale = this._xscale;
+   this.target["balle" + Arme.nbproject].go(1,this._xscale / 100);
+   this.lastshoot = 6505;
+   this.canshoot = false;
+   this.gotoAndStop("gun");
+   if(this.speedX == 0)
+   {
+      this.speedX = this.dir * this.maxX / 2;
+   }
+   this.nextentframe = this.onEnterFrame;
+   this.onEnterFrame = this.fire;
+};
+Perso.prototype.shootWithGunVert = function()
+{
+   Arme.nbproject++;
+   this.munitions -= 1;
+   _root.mcConsole.weapon = this.munitions;
+   this.target.attachMovie("idtir","balle" + Arme.nbproject,Arme.nbproject);
+   this.game.soundFireGun.start();
+   this.target["balle" + Arme.nbproject]._x = - this.target.PosX + this.x + this._x - this.posX + this.dir * this._width / 2;
+   this.target["balle" + Arme.nbproject]._y = this.y + this._y - this.target.posY - this.posY - this._height / 2;
+   this.target["balle" + Arme.nbproject]._xscale = this._xscale;
+   this.target["balle" + Arme.nbproject].go(2,this._xscale / 100);
+   this.lastshoot = 3538;
+   this.canshoot = false;
+   this.gotoAndStop("gun");
+   if(this.speedX == 0)
+   {
+      this.speedX = this.dir * this.maxX / 2;
+   }
+   this.nextentframe = this.onEnterFrame;
+   this.onEnterFrame = this.fire;
+};
+Perso.prototype.shootWithRepHor = function()
+{
+   Arme.nbproject++;
+   this.munitions -= 1;
+   _root.mcConsole.weapon = this.munitions;
+   this.target.attachMovie("idFlash","rep" + Arme.nbproject,Arme.nbproject);
+   this.game.soundFireFlash.start();
+   this.target["rep" + Arme.nbproject]._x = - this.target.PosX + this.x + this._x - this.posX + this.dir * this._width / 2;
+   this.target["rep" + Arme.nbproject]._y = this.y + this._y - this.target.posY - this.posY - this._height / 2;
+   this.target["rep" + Arme.nbproject]._xscale = this._xscale;
+   this.target["rep" + Arme.nbproject].go(1,this._xscale / 100);
+   this.lastshoot = 5416;
+   this.canshoot = false;
+   if(this.speedX == 0)
+   {
+      this.speedX = this.dir * this.maxX / 2;
+   }
+   this.gotoAndStop("gun");
+   this.nextentframe = this.onEnterFrame;
+   this.onEnterFrame = this.fire;
+};
+Perso.prototype.shootWithRepVert = function()
+{
+   Arme.nbproject++;
+   this.munitions -= 1;
+   _root.mcConsole.weapon = this.munitions;
+   this.target.attachMovie("idFlash","rep" + Arme.nbproject,Arme.nbproject);
+   this.game.soundFireFlash.start();
+   this.target["rep" + Arme.nbproject]._x = - this.target.PosX + this.x + this._x - this.posX + this.dir * this._width / 2;
+   this.target["rep" + Arme.nbproject]._y = this.y + this._y - this.target.posY - this.posY - this._height / 2;
+   this.target["rep" + Arme.nbproject]._xscale = this._xscale;
+   this.target["rep" + Arme.nbproject].go(2,this._xscale / 10);
+   this.lastshoot = 8171;
+   this.canshoot = false;
+   this.gotoAndStop("gun");
+   if(this.speedX == 0)
+   {
+      this.speedX = this.dir * this.maxX / 4;
+   }
+   this.nextentframe = this.onEnterFrame;
+   this.onEnterFrame = this.fire;
+};
+Perso.prototype.putMine = function()
+{
+   if(this.target.mines == undefined && this.status.moveHor == undefined && this.status.moveVer == undefined)
+   {
+      this.timeofmine = 10459;
+      this.munitions -= 1;
+      _root.mcConsole.weapon = this.munitions;
+      this.target.attachMovie("idmine","mines",100);
+      this.game.soundPutMine.start();
+      this.target.mines._x = - this.target.PosX + this.x + this._x - this.posX;
+      this.target.mines._y = this.status._y;
+      this.target.mines.go(this.initZone());
+      this.gotoAndStop("mine");
+      this.onEnterFrame = this.onPutMine;
+   }
+};
+Perso.prototype.fire = function()
+{
+   this.fallY = 0;
+   var _loc2_ = this.initZone();
+   this.sens = this._xscale;
+   this.speedX /= this.acc;
+   var _loc3_ = false;
+   var _loc4_ = this.target.wall[_loc2_];
+   var _loc5_ = null;
+   for(var _loc6_ in _loc4_)
+   {
+      if(_loc4_[_loc6_] != this.status && _loc4_[_loc6_].hitTest(this._x,this._y))
+      {
+         _loc5_ = _loc4_[_loc6_];
+         _loc3_ = true;
+         this.acc = 5;
+         this.speedX = 0;
+         this.onEnterFrame = this.move;
+      }
+   }
+   if(this.nextentframe == this.moveonPfMove && this.engine == 1)
+   {
+      this.x += this.status.moveHor;
+      this.target.move();
+   }
+   else
+   {
+      if(this.nextentframe == this.moveonPfVert)
+      {
+         this._y = - this.y + this.posY + this.target.posY + this.status._y;
+      }
+      if(Math.abs(this.speedX) > 4)
+      {
+         this.scrollMove();
+         this.scrollY();
+      }
+   }
+   if(!this.status.mcHit.hitTest(this.mcPied))
+   {
+      this.gotoAndStop("jump");
+      this.onEnterFrame = this.fall;
+   }
+   if(Math.abs(this.speedX) < 1)
+   {
+      this.onEnterFrame = this.nextentframe;
+   }
+};
+Perso.prototype.onPutMine = function()
+{
+   this.fallY = 0;
+   this.speedX = 0;
+   var _loc2_ = this.initZone();
+   this.sens = this._xscale;
+   if(1050 - this.timeofmine > 400)
+   {
+      this.gotoAndStop("pause");
+      this.onEnterFrame = this.move;
+   }
+};
+Perso.prototype.testPolio = function()
+{
+   if(Key.isDown(Game.LEFT) && Key.isDown(Game.RIGHT))
+   {
+      return true;
+   }
+};
+Perso.prototype.startMicelle = function()
+{
+   this.createEmptyMovieClip("mcmicelle",1);
+   this.delaymicelle = 2000;
+   this.newMicelle = 2633;
+   this.mcmicelle.onEnterFrame = function()
+   {
+      var _loc2_ = this._parent;
+      var _loc3_;
+      if(10217 - _loc2_.newMicelle > _loc2_.delaymicelle && _loc2_.target.micellea == undefined && _loc2_.onEnterFrame == _loc2_.move)
+      {
+         _loc2_.newMicelle = 7814;
+         _loc3_ = Math.ceil(Math.random() * 2.5);
+         _loc2_.target.attachMovie("idMicelle","micellea",200);
+         _loc2_.target.micellea._x = _loc2_.target.PosX + 640 / _loc3_;
+         _loc2_.target.micellea._y = _loc2_.y + _loc2_._y - _loc2_.target.posY - _loc2_.posY + 480;
+         _loc2_.target.micellea.posY = _loc2_.target.micellea._y;
+      }
+   };
+   this.startmicelle = null;
+};
+Perso.prototype.createMicelle = function()
+{
+   var _loc2_ = this._parent;
+   var _loc3_;
+   if(6141 - _loc2_.newMicelle > _loc2_.delaymicelle && _loc2_.target.micellea == undefined && _loc2_.onEnterFrame == _loc2_.move)
+   {
+      _loc2_.newMicelle = 5064;
+      _loc3_ = Math.ceil(Math.random() * 2.5);
+      _loc2_.target.attachMovie("idMicelle","micellea",200);
+      _loc2_.target.micellea._x = _loc2_.target.PosX + 640 / _loc3_;
+      _loc2_.target.micellea._y = _loc2_.y + _loc2_._y - _loc2_.target.posY - _loc2_.posY + 480;
+      _loc2_.target.micellea.posY = _loc2_.target.micellea._y;
+   }
+};
+Perso.prototype.onPopup = function()
+{
+   this.onPopup = null;
+   this.game.speedTime = 0;
+   _root.attachMovie("idBall","mcBall",_root.getMaxDepth(),{_x:this._x,_y:this._y,target:this,screen:this.bonus,level:"lev" + this.game.level});
+   this.acc = 5;
+};
+Perso.prototype.onBossLost = function()
+{
+   this.onBossLost = null;
+   this.game.speedTime = 0;
+   this.acc = 5;
+   this.gotoAndStop("win");
+   this.onEnterFrame = null;
+};
+Perso.prototype.pause = function()
+{
+   this.bonus = "pause";
+   delete this.onPopup;
+   this.status.pause();
+   this.frameafterpause = this.onEnterFrame;
+   var _loc2_ = this.current_zone - 1;
+   while(_loc2_ < this.current_zone + 2)
+   {
+      lennemis = this.target.ennemis[lZone];
+      for(var _loc3_ in lennemis)
+      {
+         lennemis[_loc3_].pause();
+      }
+      lplatevert = this.target.plateformevert[lZone];
+      for(_loc3_ in lplatevert)
+      {
+         lplatevert[_loc3_].pause();
+      }
+      lplatemove = this.target.plateformemove[lZone];
+      for(_loc3_ in lplatemove)
+      {
+         lplatemove[_loc3_].pause();
+      }
+      _loc2_ += 1;
+   }
+   if(this.game.level == 12)
+   {
+      delete this.startmicelle;
+      this.target.micellea.onEnterFrame = null;
+   }
+   this.mcmicelle.removeMovieClip();
+};
+Perso.prototype.go = function()
+{
+   this.onPopup = null;
+   this.onBossLost = null;
+   this.invincibility = 2000 + (3 - this.game.difficulty) * 1000;
+   lennemis = this.target.ennemis[0];
+   for(var _loc2_ in lennemis)
+   {
+      lennemis[_loc2_].go();
+   }
+   lplatevert = this.target.plateformevert[0];
+   for(_loc2_ in lplatevert)
+   {
+      lplatevert[_loc2_].go();
+   }
+   lplatemove = this.target.plateformemove[0];
+   for(_loc2_ in lplatemove)
+   {
+      lplatemove.go();
+   }
+   if(this.engine == 1)
+   {
+      this.scrollMove = this.scrollXMove;
+      this.scrollFall = this.scrollXFall;
+      this.scrollJump = null;
+      this.initZone = this.initZone1;
+   }
+   else if(this.engine == 2)
+   {
+      this.scrollMove = this.scrollYMove;
+      this.scrollFall = this.scrollYFall;
+      this.scrollJump = this.scrollYJump;
+      this.scrollYUp = this.onScrollingYUp;
+      this.initZone = this.initZone2;
+   }
+   else
+   {
+      this.scrollMove = this.scrollYMove;
+      this.scrollFall = this.scrollXFall;
+      this.scrollJump = this.scrollXJump;
+      this.initZone = this.initZone2;
+      this.target.move = null;
+   }
+   switch(this.game.level)
+   {
+      case 11:
+         this.shoot = null;
+         this.maxmunition = Arme.nbmaxmunitions;
+         this.CollBossMove = null;
+         this.CollBossJump = null;
+         this.CollBossFall = null;
+         this.CollPiegeMove = null;
+         this.CollPiegeFall = null;
+         this.CollEnnemiMove = this.CollEnzymeMove;
+         this.CollEnnemiJump = this.CollEnzymeJump;
+         break;
+      case 12:
+         this.CollBossMove = null;
+         this.CollBossJump = null;
+         this.CollBossFall = null;
+         this.CollEnnemiMove = this.CollEnzymeMove;
+         this.CollEnnemiJump = this.CollEnzymeJump;
+         break;
+      case 21:
+         this.shoot = this.shootWithGunHor;
+         this.maxmunition = Arme.nbmaxmunitions;
+         this.CollBossMove = null;
+         this.CollBossJump = null;
+         this.CollBossFall = null;
+         this.CollEnnemiMove = this.CollMaxibeurkMove;
+         break;
+      case 22:
+         this.startMicelle = null;
+         this.shoot = this.putMine;
+         this.maxmunition = Mine.nbmaxmunitions;
+         this.CollBossMove = null;
+         this.CollBossJump = null;
+         this.CollBossFall = null;
+         this.CollEnnemiMove = this.CollMaxibeurkMove;
+         break;
+      case 24:
+         this.startMicelle = null;
+         this.CollEnnemiMove = this.CollMaxibeurkMove;
+         this.onTouch = null;
+         break;
+      case 31:
+         this.shoot = this.shootWithRepHor;
+         this.maxmunition = Armerepousse.nbmaxmunitions;
+         this.CollBossMove = null;
+         this.CollBossJump = null;
+         this.CollBossFall = null;
+         this.CollEnnemiMove = this.CollMaxibeurkMove;
+         break;
+      case 32:
+         this.startMicelle = null;
+         this.shoot = this.putMine;
+         this.maxmunition = Mine.nbmaxmunitions;
+         this.CollBossMove = null;
+         this.CollBossJump = null;
+         this.CollBossFall = null;
+         this.CollEnnemiMove = this.CollMaxibeurkMove;
+         break;
+      case 34:
+         this.startMicelle = null;
+         this.CollEnnemiMove = this.CollMaxibeurkMove;
+         this.onTouch = null;
+         break;
+      default:
+         this.shoot = null;
+   }
+   this.mcHead._height = 0;
+   this.speedY = 1;
+   this.status = this.target.mcStart;
+   this.onEnterFrame = this.move;
+};
+_global.Screen = function()
+{
+};
+Screen["extends"](MovieClip);
+Object.registerClass("idScreen",Screen);
+Screen.prototype.loadGame = function()
+{
+   if(this.game.level == 35)
+   {
+      this.loadEnd();
+   }
+   else if(this.game.level % 10 == 1)
+   {
+      this.loadUnivers();
+   }
+   else
+   {
+      this.loadLevel();
+   }
+};
+Screen.prototype.loadUnivers = function()
+{
+   _quality = "high";
+   this.onEnterFrame = this.onLoadUnivers;
+   this.createEmptyMovieClip("mcConteneur",0);
+   this.mcConteneur.loadMovie("univers" + Math.floor(this.game.level / 10) + ".swf");
+};
+Screen.prototype.onLoadUnivers = function()
+{
+   if(this.mcConteneur.getBytesTotal() && this.mcConteneur.getBytesLoaded() >= this.mcConteneur.getBytesTotal())
+   {
+      this.keyb = {target:this};
+      this.keyb.onKeyDown = function()
+      {
+         this.target.loadLevel(this.target);
+      };
+      Key.addListener(this.keyb);
+      this.mcConteneur.play();
+      this.game.soundMap.start(0,50);
+      this.onEnterFrame = this.onMapEnd;
+   }
+};
+Screen.prototype.onMapEnd = function()
+{
+   if(this.mcConteneur._currentframe == 71)
+   {
+      this.game.soundHalo.start();
+   }
+   if(this.mcConteneur._currentframe == this.mcConteneur._totalframes)
+   {
+      this.mcConteneur.stop();
+      this.onEnterFrame = this.fadeOutMap;
+      this.onTime = setInterval(this.loadLevel,3500,this);
+   }
+};
+Screen.prototype.fadeOutMap = function()
+{
+   var _loc2_ = this.game.soundMap;
+   if(_loc2_.getVolume() > 1)
+   {
+      _loc2_.setVolume(_loc2_.getVolume() - 1);
+   }
+};
+Screen.prototype.loadLevel = function(pThis)
+{
+   _quality = "high";
+   if(pThis)
+   {
+      this = pThis;
+      clearInterval(this.onTime);
+      delete this.onTime;
+      Key.removeListener(this.keyb);
+      delete this.keyb;
+   }
+   this.game.soundMap.stop();
+   this.onEnterFrame = this.onLoadLevel;
+   if(!this.mcConteneur)
+   {
+      this.createEmptyMovieClip("mcConteneur",0);
+   }
+   this.mcConteneur.loadMovie("level" + this.game.level + ".swf");
+};
+Screen.prototype.onLoadLevel = function()
+{
+   var _loc2_;
+   if(this.mcConteneur.getBytesTotal() && this.mcConteneur.getBytesLoaded() >= this.mcConteneur.getBytesTotal())
+   {
+      this.onEnterFrame = null;
+      this.mcConteneur.stop();
+      this.game.soundFondVoix.start(0,10);
+      _loc2_ = this.game["soundLevel" + this.game.level];
+      _loc2_.setVolume(22 * this.game.volume);
+      _loc2_.start();
+      if(options)
+      {
+         _loc2_.onSoundComplete = function()
+         {
+            mcScreen.onEnterFrame = mcScreen.fadeOut;
+         };
+      }
+      else
+      {
+         _quality = "high";
+         this.onEnterFrame = this.onLevelEnd;
+      }
+   }
+};
+Screen.prototype.fadeOut = function()
+{
+   var _loc2_ = this.game.soundFondVoix;
+   _loc2_.setVolume(_loc2_.getVolume() - 2);
+   if(_loc2_.getVolume() < 1)
+   {
+      this.onEnterFrame = this.onLevelEnd;
+   }
+};
+Screen.prototype.onLevelEnd = function()
+{
+   if(this.mcConteneur._currentframe == this.mcConteneur._totalframes)
+   {
+      this.onEnterFrame = null;
+      this.mcConteneur.stop();
+      this.game.onTime = setInterval(this.game.onReplay,500,this.game);
+   }
+};
+Screen.prototype.loadEnd = function()
+{
+   _quality = "high";
+   this.onEnterFrame = this.onLoadEnd;
+   this.createEmptyMovieClip("mcConteneur",0);
+   this.mcConteneur.loadMovie("fin.swf");
+};
+Screen.prototype.onLoadEnd = function()
+{
+   if(this.mcConteneur.getBytesTotal() && this.mcConteneur.getBytesLoaded() >= this.mcConteneur.getBytesTotal())
+   {
+      this.onEnterFrame = this.onEndEnd;
+      this.soundEnd = new Sound(this.mcConteneur);
+      this.soundEnd.setVolume(25 * this.game.volume);
+      this.mcConteneur.play();
+   }
+};
+Screen.prototype.onEndEnd = function()
+{
+   if(this.mcConteneur._currentframe == this.mcConteneur._totalframes)
+   {
+      this.onEnterFrame = null;
+      this.onTime = setInterval(this.loadScore,20000,this);
+   }
+};
+Screen.prototype.loadScore = function(pThis)
+{
+   if(pThis)
+   {
+      this = pThis;
+      delete this.soundEnd;
+      clearInterval(this.onTime);
+      this.mcConteneur.remove();
+   }
+   _quality = "high";
+   this.onEnterFrame = this.onLoadScore;
+   this.createEmptyMovieClip("mcConteneur",0);
+   this.mcConteneur.loadMovie("scoring.swf");
+};
+Screen.prototype.onLoadScore = function()
+{
+   if(this.mcConteneur.getBytesTotal() && this.mcConteneur.getBytesLoaded() >= this.mcConteneur.getBytesTotal())
+   {
+      delete this.onEnterFrame;
+      this.game.setScore(this.mcConteneur);
+   }
+};
+_global.Popup = function()
+{
+   this.target.speedX = 0;
+   this.target.speedY = 0;
+   this.target.onEnterFrame = null;
+   this.target.target.mcBoss.onEnterFrame = null;
+   this.target.gotoAndStop("pause");
+   this.onEnterFrame = this.move;
+};
+Popup["extends"](MovieClip);
+Object.registerClass("idBall",Popup);
+Popup.prototype.move = function()
+{
+   if(Key.isDown(Game.ACTION))
+   {
+      this.onClose();
+   }
+   this._x += (320 - this._x) / 3;
+   this._y += (255 - this._y) / 3;
+   if(Math.abs(320 - this._x) < 1)
+   {
+      this.onEnterFrame = function()
+      {
+         if(Key.isDown(Game.ACTION))
+         {
+            this.onClose();
+         }
+      };
+      this._x = 320;
+      this._y = 255;
+      this.play();
+   }
+};
+Popup.prototype.onStart = function()
+{
+   this.nextFrame();
+   this.createEmptyMovieClip("mcConteneur",0);
+   this.mcConteneur._x = -249;
+   this.mcConteneur._y = -157;
+   this.mcConteneur.loadMovie(this.screen + ".swf");
+   this.onEnterFrame = this.onLoadScreen;
+};
+Popup.prototype.onLoadScreen = function()
+{
+   if(this.mcConteneur.getBytesTotal() && this.mcConteneur.getBytesLoaded() >= this.mcConteneur.getBytesTotal())
+   {
+      this.onEnterFrame = this.close;
+      _quality = "HIGH";
+      this.mcConteneur.nextFrame();
+   }
+};
+Popup.prototype.close = function()
+{
+   if(Key.isDown(Game.ACTION))
+   {
+      _quality = Game.quality;
+      this.onEnterFrame = null;
+      this.mcConteneur.remove();
+      this.mcBallCoins.play();
+   }
+   else if(Key.isDown(Game.PAUSE) && this.screen == "pause")
+   {
+      this.target.game.lives = 0;
+      this.target.game.replay("lost");
+   }
+};
+Popup.prototype.onClose = function()
+{
+   if(this.target.frameafterpause != null)
+   {
+      this.target.onEnterFrame = this.target.frameafterpause;
+   }
+   else
+   {
+      this.target.onEnterFrame = this.target.move;
+   }
+   this.target.frameafterpause = null;
+   _root.newGame.speedTime = 1;
+   var _loc3_;
+   if(_root.newGame.level % 10 == 3)
+   {
+      if(_root.newGame.level != 13)
+      {
+         this.target.time = 10092;
+         delete this.target.maxibeurk;
+         for(var _loc4_ in _root)
+         {
+            if(_root[_loc4_] instanceof MaxibeurkVol || _root[_loc4_] instanceof MaxibeurkVolTir)
+            {
+               _root[_loc4_].onEnterFrame = _root[_loc4_].move;
+            }
+         }
+      }
+      this.target.timeFps = 1392;
+      delete this.target.onFps;
+   }
+   else
+   {
+      this.target.gotoAndStop("move");
+      this.target.target.mcBoss.onEnterFrame = this.target.target.mcBoss.move;
+      this.target.target.micellea.onEnterFrame = this.target.target.micellea.move;
+      _loc3_ = this.target.current_zone - 1;
+      while(_loc3_ < this.target.current_zone + 2)
+      {
+         lennemis = this.target.target.ennemis[lZone];
+         for(_loc4_ in lennemis)
+         {
+            lennemis[_loc4_].restart();
+         }
+         lplatevert = this.target.target.plateformevert[lZone];
+         for(_loc4_ in lplatevert)
+         {
+            lplatevert[_loc4_].restart();
+         }
+         lplatemove = this.target.target.plateformemove[lZone];
+         for(_loc4_ in lplatemove)
+         {
+            lplatemove[_loc4_].restart();
+         }
+         _loc3_ += 1;
+      }
+      if(_root.newGame.level == 12 && this.target.current_Zone > 1)
+      {
+         this.target.startmicelle();
+      }
+   }
+   this.remove();
+};
+_global.Arme = function()
+{
+   this.speedX = 20;
+   this.posX;
+   this.maxX = 400;
+   this.zone = null;
+};
+Arme.prototype = new MovieClip();
+Arme.nbproject = 0;
+Arme.nbmaxmunitions = 15;
+Object.registerClass("idtir",Arme);
+Arme.prototype.move = function()
+{
+   this._x += this.speedX;
+   this.zone = this.initzone();
+   lwall = this._parent.wall[this.zone];
+   for(var _loc2_ in lwall)
+   {
+      if(lwall[_loc2_].hitTest(this) && lwall[_loc2_] != this._parent.target.status)
+      {
+         this.remove();
+      }
+   }
+   lennemis = this._parent.ennemis[this.zone];
+   for(_loc2_ in lennemis)
+   {
+      if(lennemis[_loc2_].hitTest(this))
+      {
+         this._parent.game.soundMaxiKill.start();
+         lennemis[_loc2_].onEnterFrame = null;
+         lennemis[_loc2_].turn = null;
+         lennemis[_loc2_].isDizzy = true;
+         lennemis[_loc2_].cantouch = false;
+         lennemis[_loc2_]._xscale = 100;
+         lennemis[_loc2_].goToAndStop("hurt");
+         this.remove();
+      }
+   }
+   if(Math.abs(this._x - this.posX) > this.MaxX)
+   {
+      this.remove();
+   }
+};
+Arme.prototype.initzone1 = function()
+{
+   return Math.floor(Math.floor(this._x / 640));
+};
+Arme.prototype.initzone2 = function()
+{
+   return Math.floor(Math.floor(this._y / 480));
+};
+Arme.prototype.go = function(pEngine, pdir)
+{
+   if(pEngine == 1)
+   {
+      this.initzone = this.initzone1;
+   }
+   else
+   {
+      this.initzone = this.initzone2;
+   }
+   this.dir = pdir;
+   this.speedX *= pdir;
+   this.posX = this._x;
+   this.onEnterFrame = this.move;
+};
+_global.Mine = function()
+{
+   this.shootMax = 100;
+   this.amorc = null;
+   this.timeboum = 5000;
+   this.zone = null;
+};
+Mine.nbmaxmunitions = 15;
+Mine.prototype = new MovieClip();
+Object.registerClass("idmine",Mine);
+Mine.prototype.sleep = function()
+{
+   if(6147 - this.amorc > this.timeboum)
+   {
+      this.time.text = "BOUM!!";
+      this.boum();
+      this.onEnterFrame = null;
+   }
+};
+Mine.prototype.boum = function()
+{
+   lennemis = this._parent.ennemis[this.zone];
+   this._parent.game.soundMine.start();
+   for(var _loc2_ in lennemis)
+   {
+      if(Math.abs(lennemis[_loc2_]._x - this._x) < this.shootMax && Math.abs(lennemis[_loc2_]._y - this._y) < this.shootMax)
+      {
+         this._parent.game.soundMaxiKill.start();
+         lennemis[_loc2_].onEnterFrame = null;
+         lennemis[_loc2_].turn = null;
+         lennemis[_loc2_].onshoot = null;
+         lennemis[_loc2_].cantouch = false;
+         lennemis[_loc2_].isDizzy = true;
+         lennemis[_loc2_]._xscale = 100;
+         lennemis[_loc2_].goToAndStop("hurt");
+      }
+   }
+};
+Mine.prototype.go = function(pZone)
+{
+   this.zone = pZone;
+};
+_global.Armerepousse = function()
+{
+   this.speedX = 20;
+   this.posX;
+   this.maxX = 400;
+   this.dir;
+   this.zone = null;
+};
+Armerepousse.nbmaxmunitions = 15;
+Armerepousse.prototype = new MovieClip();
+Object.registerClass("idFlash",Armerepousse);
+Armerepousse.prototype.move = function()
+{
+   this._x += this.speedX;
+   this.zone = this.initzone();
+   lwall = this._parent.wall[this.zone];
+   for(var _loc2_ in lwall)
+   {
+      if(lwall[_loc2_].hitTest(this) && lwall[_loc2_] != this._parent.target.status)
+      {
+         this.remove();
+      }
+   }
+   lennemis = this._parent.ennemis[this.zone];
+   for(_loc2_ in lennemis)
+   {
+      if(lennemis[_loc2_].hitTest(this))
+      {
+         this._parent.game.soundMaxiKill.start();
+         lennemis[_loc2_].shoot(this.dir);
+         this.remove();
+      }
+   }
+   if(Math.abs(this._x - this.posX) > this.MaxX)
+   {
+      this.remove();
+   }
+};
+Armerepousse.prototype.initzone1 = function()
+{
+   return Math.floor(Math.floor(this._x / 640));
+};
+Armerepousse.prototype.initzone2 = function()
+{
+   return Math.floor(Math.floor(this._y / 480));
+};
+Armerepousse.prototype.go = function(pEngine, pdir)
+{
+   if(pEngine == 1)
+   {
+      this.initzone = this.initzone1;
+   }
+   else
+   {
+      this.initzone = this.initzone2;
+   }
+   this.dir = pdir;
+   this.speedX *= pdir;
+   this.posX = this._x;
+   this.onEnterFrame = this.move;
+};
+_global.MaxiBeurk = function()
+{
+   if(this._parent.game.difficulty < 3 && this._name.substring(2,3) == "3")
+   {
+      this.remove();
+   }
+   if(this._parent.game.difficulty < 2 && this._name.substring(2,3) == "2")
+   {
+      this.remove();
+   }
+   this._visible = false;
+   this.isDizzy = false;
+   this.cantouch = true;
+   this.lastcomp = null;
+   this.depl = 1;
+   this.searchrapdity = 4;
+   this.retourn = false;
+   this.status = null;
+   this._xmax = null;
+   this._xmin = null;
+   this.perso = this._parent.target;
+   this._shoot = 200;
+   this.delayofdizzy = 6000 / this._parent.game.difficulty;
+   this.timeofshoot = null;
+   this.conteneur = this._parent.ennemis;
+   this.engine = this._parent.target.engine;
+   if(this._parent.target.engine == 1)
+   {
+      this.initzone = this.initzone1;
+   }
+   else
+   {
+      this.initzone = this.initzone2;
+   }
+   this.zone = this.initzone();
+   if(!this.conteneur[this.zone])
+   {
+      this.conteneur[this.zone] = new Object();
+   }
+   this.conteneur[this.zone][this._name] = this;
+   this.deplshoot = 0;
+};
+MaxiBeurk["extends"](MovieClip);
+Object.registerClass("idMaxibeurk",MaxiBeurk);
+MaxiBeurk.prototype.searchZone = function()
+{
+   var _loc2_ = this.initZone();
+   if(_loc2_ != this.zone)
+   {
+      if(!this.conteneur[_loc2_])
+      {
+         this.conteneur[_loc2_] = new Object();
+      }
+      this.conteneur[_loc2_][this._name] = this;
+      delete this.conteneur[this.zone][this._name];
+      this.zone = _loc2_;
+   }
+};
+MaxiBeurk.prototype.searchBloc = function()
+{
+   lwall = this._parent.wall[this.zone];
+   for(var _loc2_ in lwall)
+   {
+      if(lwall[_loc2_] != this.status && lwall[_loc2_].hitTest(this))
+      {
+         if(this._x > lwall[_loc2_]._x)
+         {
+            this._xmin = lwall[_loc2_]._x + lwall[_loc2_]._width;
+         }
+         else
+         {
+            this._xmax = lwall[_loc2_]._x;
+         }
+      }
+   }
+};
+MaxiBeurk.prototype.move = function()
+{
+   this.searchZone();
+   if(this._x <= this._xmin + 20)
+   {
+      this._x = this._xmin + 30;
+      this.goToAndStop("turn");
+      this.depl = 0;
+   }
+   else if(this._x >= this._xmax - 20)
+   {
+      this._x = this._xmax - 30;
+      this.goToAndStop("turn");
+      this.depl = 0;
+   }
+   if(this.retourn)
+   {
+      this._x -= this.depl;
+   }
+   else
+   {
+      this._x += this.depl;
+   }
+};
+MaxiBeurk.prototype.search = function()
+{
+   this.searchZone();
+   if(this._x <= this._xmin + 20)
+   {
+      this._x += 10;
+      this.goToAndStop("turn");
+      this.depl = 0;
+   }
+   else if(this._x >= this._xmax - 20)
+   {
+      this._x -= 10;
+      this.goToAndStop("turn");
+      this.depl = 0;
+   }
+   if(this._x < - this.perso.PosX - this._parent.PosX + this.perso._x + this.perso.x)
+   {
+      if(this._xscale < 0)
+      {
+         this.goToAndStop("turn");
+         this.depl = 0;
+      }
+      this._x += this.depl * this.searchrapdity;
+   }
+   else
+   {
+      if(this._xscale > 0)
+      {
+         this.goToAndStop("turn");
+         this.depl = 0;
+      }
+      this._x -= this.depl * this.searchrapdity;
+   }
+};
+MaxiBeurk.prototype.turn = function()
+{
+   if(this.retourn == true)
+   {
+      this._xscale = 100;
+      if(!this.mustsearch)
+      {
+         this.goToAndStop("walk");
+      }
+      else
+      {
+         this.goToAndStop("run");
+      }
+      this.depl = 1;
+   }
+   else
+   {
+      this._xscale = -100;
+      if(!this.mustsearch)
+      {
+         this.goToAndStop("walk");
+      }
+      else
+      {
+         this.goToAndStop("run");
+      }
+      this.depl = 1;
+   }
+   this.retourn = !this.retourn;
+};
+MaxiBeurk.prototype.shoot = function(pDir)
+{
+   this.isDizzy = true;
+   this.timeofshoot = 6434;
+   this.cantouch = false;
+   this.deplshoot = 0;
+   if(this._x < - this.perso.PosX - this._parent.PosX + this.perso._x + this.perso.x)
+   {
+      this.depl = (- this._shoot) / 10;
+      this._xscale = 100;
+      this.retourn = false;
+   }
+   else
+   {
+      this.depl = this._shoot / 10;
+      this._xscale = -100;
+      this.retourn = true;
+   }
+   this.goToAndStop("push");
+   this.onEnterFrame = this.onShoot;
+};
+MaxiBeurk.prototype.onShoot = function()
+{
+   this.searchZone();
+   var _loc2_ = this.initZone();
+   this._x += this.depl;
+   if(this.engine == 2)
+   {
+      if(this._x >= 645)
+      {
+         this._x = this._xmax;
+         this.timeofshoot = 1364;
+         this.goToAndStop("dizzy");
+         this.onEnterFrame = this.onDizzy;
+      }
+      else if(this._x <= 0)
+      {
+         this._x = this._xmin;
+         this.timeofshoot = 5838;
+         this.goToAndStop("dizzy");
+         this.onEnterFrame = this.onDizzy;
+      }
+   }
+   if(this._x > this._xmax || this._x < this._xmin)
+   {
+      this.cantouch = true;
+      this.mustsearch = false;
+      this.onEnterFrame = this.fall;
+   }
+   else if(this.deplshoot == 10)
+   {
+      this.cantouch = true;
+      this.onEnterFrame = this.onDizzy;
+      this.goToAndStop("dizzy");
+   }
+   lwall = this._parent.wall[_loc2_];
+   for(var _loc3_ in lwall)
+   {
+      if(lwall[_loc3_].hitTest(this) && this.status != lwall[_loc3_])
+      {
+         if(this._x > lwall[_loc3_]._x + lwall[_loc3_]._width / 2)
+         {
+            this._x = this._xmin + 20;
+         }
+         else
+         {
+            this._x = this._xmax - 20;
+         }
+         this.cantouch = false;
+         this.timeofshoot = 8909;
+         this.goToAndStop("dizzy");
+         this.onEnterFrame = this.onDizzy;
+      }
+   }
+   for(_loc3_ in this.status.ennemis)
+   {
+      if(this.hitTest(this.status.ennemis[_loc3_]) && this.status.ennemis[_loc3_].cantouch && this != this.status.ennemis[_loc3_] && this.status.ennemis[_loc3_].ennemicoll != this)
+      {
+         this.ennemicoll = this.status.ennemis[_loc3_];
+         this.cantouch = false;
+         this.onEnterFrame = this.onDizzy;
+         this.goToAndStop("dizzy");
+         this.status.ennemis[_loc3_].shoot(1);
+      }
+   }
+   lpieges = this._parent.trapennemis[_loc2_];
+   for(_loc3_ in lpieges)
+   {
+      if(lpieges[_loc3_].hitTest(this))
+      {
+         this.onEnterFrame = null;
+         this.cantouch = false;
+         this._parent.game.soundMaxiKill.start();
+         this._parent.game.soundGlouton.start();
+         lpieges[_loc3_].timeofeat = 2917;
+         lpieges[_loc3_].gotoAndStop("enabled");
+         lpieges[_loc3_].onEnterFrame = lpieges[_loc3_].eatMaxib;
+         this._xscale = 100;
+         this.goToAndStop("gloutiz");
+      }
+   }
+   this.deplshoot++;
+};
+MaxiBeurk.prototype.fall = function()
+{
+   this._y += this._height;
+   if((this.perso.engine == 1 || this._parent.game.level == 34) && this._y > 480)
+   {
+      this._parent.game.soundMaxiKill.start();
+      this.onKill();
+   }
+   var _loc2_ = this.initZone();
+   lpieges = this._parent.trapennemis[_loc2_];
+   for(var _loc3_ in lpieges)
+   {
+      if(lpieges[_loc3_].hitTest(this))
+      {
+         this.onEnterFrame = null;
+         this.cantouch = false;
+         this._parent.game.soundGlouton.start();
+         this._parent.game.soundMaxiKill.start();
+         lpieges[_loc3_].timeofeat = 6218;
+         lpieges[_loc3_].gotoAndStop("enabled");
+         lpieges[_loc3_].onEnterFrame = lpieges[_loc3_].eatMaxib;
+         this._xscale = 100;
+         this.goToAndStop("gloutiz");
+      }
+   }
+   lwall = this._parent.wall[_loc2_];
+   for(_loc3_ in lwall)
+   {
+      if(lwall[_loc3_].mcHit.hitTest(this) && this.status != lwall[_loc3_])
+      {
+         this.status.deleteEnnemi(this);
+         this.status = lwall[_loc3_];
+         this.status.addEnnemi(this);
+         this._y = this.status._y;
+         this.searchZone();
+         this._xmin = this.status._x;
+         this._xmax = this._xmin + this.status.mchit._width * (this.status._xscale / 100);
+         this.goToAndStop("dizzy");
+         this.firstframe = true;
+         this.onEnterFrame = this.onDizzy;
+         this.firstplf();
+         return true;
+      }
+      if(this.firstframe && lwall[_loc3_].hitTest(this) && this.status != lwall[_loc3_])
+      {
+         this._y = this.status._y;
+         this.firstframe = true;
+         if(this._x > lwall[_loc3_]._x + lwall[_loc3_]._width / 2)
+         {
+            this._x = this._xmin;
+         }
+         else
+         {
+            this._x = this._xmax;
+         }
+         this.cantouch = false;
+         this.timeofshoot = 4269;
+         this.goToAndStop("dizzy");
+         this.firstframe = true;
+         this.onEnterFrame = this.onDizzy;
+         this.firstplf();
+         return true;
+      }
+      this.firstframe = false;
+   }
+   lplateforme = this._parent.plateforme[_loc2_];
+   for(_loc3_ in lplateforme)
+   {
+      if(lplateforme[_loc3_].mcHit.hitTest(this) && this.status != lplateforme[_loc3_])
+      {
+         this.status.deleteEnnemi(this);
+         this.status = lplateforme[_loc3_];
+         this.status.addEnnemi(this);
+         this._y = this.status._y;
+         this.searchZone();
+         this._xmin = this.status._x;
+         this._xmax = this._xmin + this.status.mchit._width * (this.status._xscale / 100);
+         this.goToAndStop("dizzy");
+         this.firstframe = true;
+         this.onEnterFrame = this.onDizzy;
+         this.firstplf();
+         return true;
+      }
+   }
+};
+MaxiBeurk.prototype.onKill = function()
+{
+   this._parent.game.MaxiBeurk++;
+   this.onEnterFrame = null;
+   this.remove();
+};
+MaxiBeurk.prototype.firstplf = function()
+{
+   this.goToAndStop("walk");
+   this.onEnterFrame = this.move;
+   this.firstplf = null;
+};
+MaxiBeurk.prototype.onDizzy = function()
+{
+   if(8361 - this.timeofshoot > 1000)
+   {
+      this.cantouch = true;
+   }
+   if(2787 - this.timeofshoot > this.delayofdizzy)
+   {
+      this.isDizzy = false;
+      this.depl = 1;
+      if(!this.mustsearch)
+      {
+         this.goToAndStop("walk");
+         this.onEnterFrame = this.move;
+      }
+      else
+      {
+         this.goToAndStop("run");
+         this.onEnterFrame = this.search;
+      }
+   }
+};
+Maxibeurk.prototype.initzone1 = function()
+{
+   return Math.floor(this._x / 640);
+};
+Maxibeurk.prototype.initzone2 = function()
+{
+   return Math.floor(this._y / 480);
+};
+MaxiBeurk.prototype.beginsearch = function()
+{
+   this.mustsearch = true;
+   if(!this.isDizzy)
+   {
+      this.goToAndStop("run");
+      this.onEnterFrame = this.search;
+   }
+};
+MaxiBeurk.prototype.stopsearch = function()
+{
+   this.mustsearch = false;
+   if(!this.isDizzy)
+   {
+      this.depl = 1;
+      this.goToAndStop("walk");
+      this.onEnterFrame = this.move;
+   }
+};
+MaxiBeurk.prototype.go = function()
+{
+   if(!this._visible)
+   {
+      this._visible = true;
+      this.goToAndStop("walk");
+      if(this.status == null)
+      {
+         this.onEnterFrame = this.fall;
+      }
+      else
+      {
+         this.onEnterFrame = this.move;
+      }
+   }
+};
+MaxiBeurk.prototype.restart = function()
+{
+   if(this.lastcomp != null)
+   {
+      if(this.isDizzy)
+      {
+         this.timeofshoot = 7490;
+      }
+      else
+      {
+         this.depl = 1;
+      }
+      this.onEnterFrame = this.lastcomp;
+      this.lastcomp = null;
+   }
+};
+MaxiBeurk.prototype.pause = function()
+{
+   this.lastComp = this.onEnterFrame;
+   this.onEnterFrame = null;
+};
+MaxiBeurk.prototype.stop = function()
+{
+   this._visible = false;
+   this.onEnterFrame = null;
+};
+MaxiBeurk.prototype.moveWithWall = function()
+{
+   if(!this.status.mcPlat.hitTest(this._x,this._y))
+   {
+      this.retourn = !this.retourn;
+   }
+   else
+   {
+      for(var _loc2_ in this.status.lesmurs)
+      {
+         if(this.hitTest(this.status.lesmurs[_loc2_]))
+         {
+            this.retourn = !this.retourn;
+         }
+      }
+   }
+   this.retourn != true ? this._x++ : this._x--;
+   if(this == _level0.instance11)
+   {
+      benchOut();
+   }
+};
+MaxiBeurk.prototype.timeOfUntouch = function()
+{
+   if(9390 - this.timeofshoot > 2000)
+   {
+      this.mort = true;
+      this.untouch = false;
+      this.onEnterFrame = this.stop;
+   }
+};
+_global.Enzyme = function()
+{
+   if(this._parent.game.difficulty < 3 && this._name.substring(2,3) == "3")
+   {
+      this.remove();
+   }
+   if(this._parent.game.difficulty < 2 && this._name.substring(2,3) == "2")
+   {
+      this.remove();
+   }
+   this.notbad = true;
+   this.lastcomp = null;
+   this._visible = false;
+   this.deplX = 1;
+   this.deplY = 10;
+   this.angle = 0;
+   this.retourn = false;
+   this.status = null;
+   this._xmax = null;
+   this._xmin = null;
+   this.conteneur = this._parent.ennemis;
+   if(this._parent.target.engine == 1)
+   {
+      this.initzone = this.initzone1;
+   }
+   else
+   {
+      this.initzone = this.initzone2;
+   }
+   this.zone = this.initzone();
+   if(!this.conteneur[this.zone])
+   {
+      this.conteneur[this.zone] = new Object();
+   }
+   this.conteneur[this.zone][this._name] = this;
+};
+Enzyme["extends"](MovieClip);
+Enzyme.prototype.move = function()
+{
+   this.searchZone();
+   if(this._x <= this._xmin + 20)
+   {
+      this._x = this._xmin + 30;
+      this.goToAndStop("turn");
+      this.deplX = 0;
+   }
+   else if(this._x >= this._xmax - 20)
+   {
+      this._x = this._xmax - 30;
+      this.goToAndStop("turn");
+      this.deplX = 0;
+   }
+   if(this.retourn)
+   {
+      this._x -= this.deplX;
+   }
+   else
+   {
+      this._x += this.deplX;
+   }
+   this._y = this.posY + this.deplY * Math.sin(this.angle);
+   this.angle += 0.2;
+};
+Enzyme.prototype.searchZone = function()
+{
+   var _loc2_ = this.initZone();
+   if(_loc2_ != this.zone)
+   {
+      if(!this.conteneur[_loc2_])
+      {
+         this.conteneur[_loc2_] = new Object();
+      }
+      this.conteneur[_loc2_][this._name] = this;
+      this.zone = _loc2_;
+   }
+};
+Enzyme.prototype.fall = function()
+{
+   this._y += this._height / 2;
+   lwall = this._parent.wall[this.zone];
+   for(var _loc2_ in lwall)
+   {
+      if(lwall[_loc2_].mcHit.hitTest(this))
+      {
+         this.status = lwall[_loc2_];
+         this.status.addEnnemi(this);
+         this._y = this.status._y;
+         this.PosY = this._y;
+         this._xmin = this.status._x;
+         this._xmax = this._xmin + this.status.mchit._width * (this.status._xscale / 100);
+         this.goToAndStop("walk");
+         this.onEnterFrame = this.move;
+         return true;
+      }
+   }
+   lplateforme = this._parent.plateforme[this.zone];
+   for(_loc2_ in lplateforme)
+   {
+      if(lplateforme[_loc2_].mcHit.hitTest(this))
+      {
+         this.status = lplateforme[_loc2_];
+         this.status.addEnnemi(this);
+         this._y = this.status._y;
+         this.PosY = this._y;
+         this._xmin = this.status._x;
+         this._xmax = this._xmin + this.status.mchit._width * (this.status._xscale / 100);
+         this.goToAndStop("walk");
+         this.onEnterFrame = this.move;
+         return true;
+      }
+   }
+};
+Enzyme.prototype.turn = function()
+{
+   if(this.retourn == true)
+   {
+      this._xscale = 100;
+      this.goToAndStop("walk");
+      this.deplX = 1;
+   }
+   else
+   {
+      this._xscale = -100;
+      this.goToAndStop("walk");
+      this.deplX = 1;
+   }
+   this.retourn = !this.retourn;
+};
+Enzyme.prototype.onDizzy = function()
+{
+   if(2209 - this.timeofshoot > 5000)
+   {
+      this.isDizzy = false;
+      this.deplX = 1;
+      this.goToAndStop("walk");
+      this.onEnterFrame = this.move;
+   }
+};
+Enzyme.prototype.initzone1 = function()
+{
+   return Math.floor(this._x / 640);
+};
+Enzyme.prototype.initzone2 = function()
+{
+   return Math.floor(this._y / 480);
+};
+Enzyme.prototype.go = function()
+{
+   if(!this._visible)
+   {
+      this._visible = true;
+      if(this.status == null)
+      {
+         this.onEnterFrame = this.fall;
+      }
+      else
+      {
+         this.isDizzy = false;
+         this.deplX = 1;
+         this.goToAndStop("walk");
+         this.onEnterFrame = this.move;
+      }
+   }
+};
+Enzyme.prototype.stop = function()
+{
+   this._visible = false;
+   this.onEnterFrame = null;
+};
+Enzyme.prototype.restart = function()
+{
+   if(this.lastcomp != null)
+   {
+      if(this.isDizzy)
+      {
+         this.timeofshoot = 3325;
+      }
+      else
+      {
+         this.depl = 1;
+      }
+      this.onEnterFrame = this.lastcomp;
+      this.lastcomp = null;
+   }
+};
+Enzyme.prototype.pause = function()
+{
+   this.lastComp = this.onEnterFrame;
+   this.onEnterFrame = null;
+};
+Object.registerClass("idEnzyme",Enzyme);
+_global.MaxibeurkVol = function()
+{
+   this.direction = 1;
+   this.amplitudeMax = 80;
+   if(_root.mcPerso.game.level == 33)
+   {
+      this.fireTime = 1457;
+      this.fireTempo = Math.floor(Math.random() * 3000);
+   }
+   else
+   {
+      this.shoot = null;
+   }
+   this.onEnterFrame = this.move;
+};
+MaxibeurkVol["extends"](MovieClip);
+Object.registerClass("idMaxibeurkVol",MaxibeurkVol);
+MaxibeurkVol.prototype.move = function()
+{
+   this.shoot();
+   if(Math.abs(this.rotation) > this.amplitude)
+   {
+      this.direction = - this.direction;
+      this.amplitude += this.amplitude <= this.amplitudeMax ? this.stability : 0;
+   }
+   this.rotation += this.rotate * this.direction;
+   this._x -= this.speed * Math.cos(3.141592653589793 * this.rotation / 180);
+   this._y -= this.speed * Math.sin(3.141592653589793 * this.rotation / 180);
+   if(this.hitTest(_root.mcPerso) && !this.shooted)
+   {
+      _root.mcPerso.hurt();
+   }
+   if(this._x < -200)
+   {
+      if(_root.mcPerso.game.level == 33 && !this.back)
+      {
+         this.shoot = false;
+         this.back = true;
+         this.speed = (- this.speed) * 1.5;
+         this._xscale = - this._xscale;
+         this.amplitude /= 2;
+      }
+      else if(_root.mcPerso.game.level != 33)
+      {
+         delete _root.mcPerso.ennemis[this._name];
+         this.remove();
+      }
+   }
+   if(_root.mcPerso.force <= 0 || Game.completed || this.back && this._x > 680)
+   {
+      delete _root.mcPerso.ennemis[this._name];
+      this.remove();
+   }
+};
+MaxibeurkVol.prototype.shoot = function()
+{
+   if(6086 - this.fireTime > this.fireTempo)
+   {
+      this.fireTime = 1989;
+      this.shoot = null;
+      _root.attachMovie("idtirMaxi",this._name + "Tir",_root.getMaxDepth(),{_x:this._x,_y:this._y});
+   }
+};
+MaxiBeurkVolTir = function()
+{
+   this.tir = 15 + Math.floor(Math.random() * 5);
+   this.onEnterFrame = this.move;
+};
+MaxibeurkVolTir["extends"](MovieClip);
+Object.registerClass("idTirMaxi",MaxibeurkVolTir);
+MaxibeurkVolTir.prototype.move = function()
+{
+   this._x -= this.tir;
+   if(this._x < 0)
+   {
+      this.remove();
+   }
+   if(this.hitTest(_root.mcPerso))
+   {
+      _root.mcPerso.hurt();
+      this.remove();
+   }
+};
+if(!_global.$extendLib)
+{
+   Button.prototype.remove = function()
+   {
+      if(this.getDepth() < 0)
+      {
+         _root.swapDepths.call(this,1048575);
+      }
+      _root.removeMovieClip.call(this);
+   };
+   ASSetPropFlags(Button.prototype,"remove",1);
+   Button.prototype.swapDepths = function(pDepth)
+   {
+      _root.swapDepths.call(this,pDepth);
+   };
+   ASSetPropFlags(Button.prototype,"swapDepths",1);
+   Function.prototype["extends"] = function(pSuperclass)
+   {
+      this.prototype.__proto__ = pSuperclass.prototype;
+      this.prototype.__constructor__ = pSuperclass;
+      ASSetPropFlags(this.prototype,"__constructor__",1);
+   };
+   MovieClip.prototype.getMaxDepth = function(pMax)
+   {
+      if(!pMax)
+      {
+         pMax = 0;
+      }
+      for(_loc3_ in this)
+      {
+         if(typeof this[_loc3_] == "movieclip" || this[_loc3_] instanceof TextField || this[_loc3_] instanceof Button || this[_loc3_] instanceof Video)
+         {
+            return pMax <= this[_loc3_].getDepth() + 1 ? this[_loc3_].getDepth() + 1 : pMax;
+         }
+      }
+      return undefined;
+   };
+   ASSetPropFlags(MovieClip.prototype,"getMaxDepth",1);
+   MovieClip.prototype.getMinDepth = function(pMin)
+   {
+      var _loc3_ = 1.7976931348623157e+308;
+      if(!pMin)
+      {
+         pMin = 0;
+      }
+      for(var _loc4_ in this)
+      {
+         if(typeof this[_loc4_] == "movieclip" || this[_loc4_] instanceof TextField || this[_loc4_] instanceof Button || this[_loc4_] instanceof Video)
+         {
+            if(this[_loc4_].getDepth() < pMin)
+            {
+            }
+            _loc3_ -= this[_loc4_].getDepth();
+            if(_loc3_ > 1)
+            {
+               lDepth = this[_loc4_].getDepth();
+            }
+            _loc3_ = this[_loc4_].getDepth();
+         }
+      }
+      return lDepth <= -16384 ? undefined : lDepth + 1;
+   };
+   ASSetPropFlags(MovieClip.prototype,"getMinDepth",1);
+   MovieClip.prototype.remove = function()
+   {
+      if(this.getDepth() < 0)
+      {
+         this.swapDepths(1048575);
+      }
+      this.removeMovieClip();
+   };
+   ASSetPropFlags(MovieClip.prototype,"remove",1);
+   TextField.prototype.remove = function()
+   {
+      if(this.getDepth() < 0)
+      {
+         _root.swapDepths.call(this,1048575);
+      }
+      this.removeTextField();
+   };
+   ASSetPropFlags(TextField.prototype,"remove",1);
+   TextField.prototype.swapDepths = function(pDepth)
+   {
+      _root.swapDepths.call(this,pDepth);
+   };
+   ASSetPropFlags(TextField.prototype,"swapDepths",1);
+   TextFormat.prototype.getTextExtent2 = TextFormat.prototype.getTextExtent;
+   TextFormat.prototype.getTextExtent = function(text)
+   {
+      var _loc3_ = this.getTextExtent2(text);
+      if(getVersion().substr(0,3) == "MAC")
+      {
+         _loc3_.height = Math.floor(_loc3_.height / 20);
+         _loc3_.width = Math.floor(_loc3_.width / 20);
+      }
+      return _loc3_;
+   };
+   ASSetPropFlags(TextFormat.prototype,"getTextExtent2,getTextExtent",1);
+   Video.prototype.remove = function()
+   {
+      if(_root.getDepth.call(this) < 0)
+      {
+         _root.swapDepths.call(this,1048575);
+      }
+      _root.removeMovieClip.call(this);
+   };
+   ASSetPropFlags(Video.prototype,"remove",1);
+   Video.prototype.swapDepths = function(pDepth)
+   {
+      _root.swapDepths.call(this,pDepth);
+   };
+   ASSetPropFlags(Video.prototype,"swapDepths",1);
+   _global.$extendLib = true;
+}
+_global.Micelle = function()
+{
+   this.posY = null;
+   this.deplY = 10;
+   this.deplX = 5;
+   this.onEnterFrame = this.move;
+   this.angle = 0;
+   this.mcCol._visible = false;
+};
+Micelle.prototype = new MovieClip();
+Object.registerClass("idMicelle",Micelle);
+Micelle.prototype.onHit = function()
+{
+   if(this._parent.target.hurt != null)
+   {
+      bench.debug = "Micelle: " + this._name;
+      this._parent.game.soundMicelle.start();
+      this._parent.target.goToAndStop("micelle");
+      this._parent.target.speedY = this.deplY;
+      this._parent.target.onEnterFrame = this._parent.target.onMicelle;
+      this.remove();
+   }
+};
+Micelle.prototype.onEclate = function()
+{
+};
+Micelle.prototype.move = function()
+{
+   this._x += this.deplX * Math.sin(this.angle);
+   this._y -= this.deplY;
+   if(Math.floor(this._y / 480) < this._parent.target.current_zone - 1)
+   {
+      this.remove();
+   }
+   if(this._parent.target.hitTest(this))
+   {
+      this.onHit();
+   }
+   this.angle += 0.2;
+};
+Boss = function()
+{
+   this.deltaX = 220;
+   this.min = 320 - this.deltaX;
+   this.max = 320 + this.deltaX;
+   this.scroll = (this._parent.game.difficulty - 1) * 10;
+   this.stability = 6;
+   this.lives = 7;
+   this.invincibility = 2000;
+   this._xscale = Math.floor(Math.random() * 2) != 0 ? 100 : -100;
+   this.speedX = this._xscale / 15;
+   this.status = "walk";
+   this.couronne = this._parent.game.level != 34 ? false : true;
+   this.hurt = this.onHurt;
+   this.onEnterFrame = this.move;
+};
+Boss["extends"](MovieClip);
+Object.registerClass("idBoss",Boss);
+Boss.prototype.move = function()
+{
+   this.gotoAndStop(this.status);
+   this._x += this.speedX;
+   bench.debug = this.status;
+   if(this.status == "run")
+   {
+      this._parent._y += Math.random() * this.scroll - this.scroll / 2;
+   }
+   else
+   {
+      this._parent._y = this._parent.debY;
+   }
+};
+Boss.prototype.change = function()
+{
+   var _loc2_ = Math.floor(Math.random() * this.stability * 2);
+   if(this._x > this.max && this._xscale > 0 || this._x < this.min && this._xscale < 0 || _loc2_ < 2 && this._x < this.max && this._x > this.min)
+   {
+      this.speedX = 0;
+      this.status = "turn";
+   }
+   else if(_loc2_ < 6 && this.status != "pause")
+   {
+      this.status = this.status != "run" ? "run" : "walk";
+      this.onChange();
+   }
+};
+Boss.prototype.turn = function()
+{
+   this._xscale = - this._xscale;
+   this.status = Math.floor(Math.random() * this.stability) >= 1 ? "walk" : "run";
+   this.onChange();
+};
+Boss.prototype.onChange = function()
+{
+   this.speedX = this.status != "run" ? this._xscale / 15 : this._xscale / 5;
+   if(this.status == "run")
+   {
+      this._parent.game.soundBoss.start();
+   }
+};
+Boss.prototype.onHurt = function()
+{
+   var _loc3_ = this._parent.game;
+   var _loc4_ = this._parent.target;
+   this.status = "pause";
+   this.hurt = null;
+   this.lives--;
+   _loc3_.maxibeurk++;
+   _loc3_.soundBossLost.start();
+   _loc3_.soundLetter.start();
+   var _loc5_;
+   if(this.lives == 0)
+   {
+      delete _loc4_.onBossLost;
+      _loc4_.hurt = null;
+      _loc5_ = 1;
+      while(_loc5_ < 8)
+      {
+         _root.mcConsole["mcLettre" + _loc5_].gotoAndPlay(2);
+         _loc5_ += 1;
+      }
+   }
+   else
+   {
+      _root.mcConsole["mcLettre" + (7 - this.lives)].play();
+   }
+   this.speedX = 0;
+   this.createEmptyMovieClip("mcInvincibility",0);
+   this.mcInvincibility.blink = true;
+   this.invincibilityTime = 8097;
+   this.mcInvincibility.onEnterFrame = function()
+   {
+      var _loc2_ = this._parent;
+      if(6926 - _loc2_.invincibilityTime - _loc2_.invincibility > 0)
+      {
+         new Color(_loc2_).setTransform({ga:100,ba:100});
+         if(_loc2_.lives == 0)
+         {
+            _loc2_._xscale = 100;
+            _loc2_.change = null;
+            if(_loc2_._parent.game.level != 34)
+            {
+               _loc2_.status = "walk";
+               new Color(_loc2_).setTransform({ga:0,ba:0});
+               _loc2_.speedX = _loc2_._xscale / 15;
+               _loc2_.onTime = setInterval(_loc2_.onLost,4000,_loc2_);
+            }
+            else
+            {
+               _loc2_.status = "fall";
+               new Color(_loc2_).setTransform({ga:100,ba:100});
+               _loc2_.onTime = setInterval(_loc2_.onLost,6000,_loc2_);
+            }
+         }
+         else
+         {
+            _loc2_.status = "walk";
+            _loc2_.speedX = _loc2_._xscale / 15;
+            _loc2_.blinking = false;
+            _loc2_.invincibility *= 1.1;
+            _loc2_.hurt = _loc2_.onHurt;
+         }
+         this.remove();
+      }
+      else
+      {
+         new Color(_loc2_).setTransform(!this.blinking ? {ga:100,ba:100} : {ga:0,ba:0});
+         this.blinking = !this.blinking;
+      }
+   };
+};
+Boss.prototype.onLost = function(pThis)
+{
+   this = pThis;
+   clearInterval(this.onTime);
+   this._parent.game.replay("next");
+};
+Vaisseau = function()
+{
+   this.maxX = 20;
+   this.maxY = 10;
+   this.acc = 5;
+   this.speedX = 0;
+   this.speedY = 0;
+   this.inertia = 1.1;
+   this.size = 100;
+   this.dir = 1;
+   this.nbhit = 0;
+   this.nohit;
+   this.canshoot = false;
+   this.force = 3;
+   this.nbframe = 0;
+   this.invincibility = 2000 + (3 - this.game.difficulty) * 1000;
+   this.timetoloose = 3000;
+   this.maxibeurkTime = 8000;
+   this.ennemis = {};
+};
+Vaisseau["extends"](MovieClip);
+Object.registerClass("idVaisseau1",Vaisseau);
+Object.registerClass("idVaisseau2",Vaisseau);
+Object.registerClass("idVaisseau3",Vaisseau);
+Vaisseau.prototype.move = function()
+{
+   this.speedX /= this.inertia;
+   this.speedY /= this.inertia;
+   this.acc /= this.inertia;
+   if(Zone3.scrolling < Zone3.scrollingMax)
+   {
+      if(this._x > 150)
+      {
+         Zone3.scrolling += 0.2;
+      }
+      if(Key.isDown(Game.RIGHT) && Zone3.scrolling < Zone3.scrollingMax && this._x > 150)
+      {
+         Zone3.scrolling += 1;
+      }
+      if(Zone3.scrolling > 10)
+      {
+         _root.mcFond.scrolling = _root.mcFond.scrollingMax;
+      }
+      _root.mcFond.scrolling = Zone3.scrolling >= 15 ? 5 : Zone3.scrolling / 3;
+   }
+   Zone3.scrolling -= !(Key.isDown(Game.LEFT) && Zone3.scrolling > Zone3.scrollingMin) ? 0 : 0.5;
+   if(Key.isDown(Game.LEFT) && this._x > 70)
+   {
+      if(this.speedX >= 0)
+      {
+         this.speedX = -1;
+      }
+      if(this.dir == 1)
+      {
+         this.acc = 5;
+         this.dir = -1;
+         this.derapage = false;
+      }
+      else
+      {
+         this.speedX *= this.acc;
+         this.speedX >= - this.maxX ? (this.speedX = this.speedX) : (this.speedX = - this.maxX);
+      }
+   }
+   else if(Key.isDown(Game.RIGHT) && this._x < 590)
+   {
+      if(this.speedX <= 0)
+      {
+         this.speedX = 1;
+      }
+      if(this.dir == -1)
+      {
+         this.acc = 5;
+         this._xscale = this.size;
+         this.derapage = false;
+         this.dir = 1;
+      }
+      else
+      {
+         this.speedX *= this.acc;
+         this.speedX <= this.maxX ? (this.speedX = this.speedX) : (this.speedX = this.maxX);
+      }
+   }
+   else
+   {
+      this._xscale = this.size;
+      this.speedX = 0;
+      this.dir = 1;
+   }
+   if(Key.isDown(Game.UP) && this._y > 110)
+   {
+      if(this.speedY >= 0)
+      {
+         this.speedY = -1;
+         this.acc = 5;
+      }
+      this.speedY *= this.acc;
+      this.speedY >= - this.maxY ? (this.speedX = this.speedX) : (this.speedY = - this.maxY);
+   }
+   else if(Key.isDown(Game.DOWN) && this._y < 430)
+   {
+      if(this.speedY <= 0)
+      {
+         this.speedY = 1;
+         this.acc = 5;
+      }
+      this.speedY *= this.acc;
+      this.speedY <= this.maxY ? (this.speedX = this.speedX) : (this.speedY = this.maxY);
+   }
+   else
+   {
+      this.speedY = 0;
+   }
+   this.speedX = Math.abs(this.speedX) >= 1 ? this.speedX : 0;
+   this.acc >= 1.5 ? (this.acc = this.acc) : (this.acc = 1.5);
+   this._x += this.speedX;
+   this._y += this.speedY;
+   this.shoot();
+   var _loc3_ = !this.hitTest(this._parent.mcZone0) ? this._parent.mcZone1 : this._parent.mcZone0;
+   bench.debug = "";
+   for(var _loc4_ in _loc3_)
+   {
+      if(this.hitTest(_loc3_[_loc4_]))
+      {
+         if(_loc3_[_loc4_] instanceof Blocs3 && this.hurt)
+         {
+            if(this.hitTest(_loc3_[_loc4_].mcHit))
+            {
+               if(this._x < _loc3_[_loc4_]._x + _loc3_._x + _loc3_[_loc4_]._width / 2)
+               {
+                  this._x -= this.speedX + Zone3.scrolling;
+                  if(this._x < 0)
+                  {
+                     this.hurt();
+                     this._x = 100;
+                  }
+               }
+               else if(this._x > _loc3_[_loc4_]._x + _loc3_[_loc4_]._width / 2 + _loc3_._x)
+               {
+                  this._x -= this.speedX;
+               }
+            }
+            else if(this.hitTest(_loc3_[_loc4_].mcHurt))
+            {
+               this._y -= this.speedY;
+               this.hurt();
+            }
+         }
+         else
+         {
+            _loc3_[_loc4_].onHit();
+         }
+      }
+   }
+   this.maxibeurk();
+   this.onFps();
+   if(Key.isDown(Game.PAUSE))
+   {
+      this.pause();
+   }
+   benchOut();
+};
+Vaisseau.prototype.onHurt = function()
+{
+   this.hurt = null;
+   this._alpha = 50;
+   this.force--;
+   if(this.force <= 0)
+   {
+      this.game.soundLostLife.start();
+      this.onEnterFrame = null;
+      this.onTime = setInterval(this.onLost,this.timetoloose,this);
+   }
+   else
+   {
+      this.game.soundLostForce.start();
+      this.createEmptyMovieClip("mcInvincibility",0);
+      this.invincibilityTime = 1348;
+      this.mcInvincibility.onEnterFrame = function()
+      {
+         var _loc2_ = this._parent;
+         var _loc3_ = 4177 - _loc2_.invincibilityTime - _loc2_.invincibility;
+         if(_loc3_ > 1500)
+         {
+            _loc2_._visible = true;
+            _loc2_.hurt = _loc2_.onHurt;
+            this.remove();
+         }
+         else if(_loc3_ > 0)
+         {
+            _loc2_._alpha = 100;
+            _loc2_._visible = !_loc2_._visible;
+         }
+      };
+   }
+   _root.mcConsole.mcForce.nextFrame();
+};
+Vaisseau.prototype.onShield = function()
+{
+   this.hurt = null;
+   this._alpha = 100;
+   this._visible = true;
+   new Color(this).setTransform({rb:128,gb:128,bb:255});
+   this.createEmptyMovieClip("mcInvincibility",0);
+   this.invincibilityTime = 4923;
+   this.mcInvincibility.onEnterFrame = function()
+   {
+      var _loc2_ = this._parent;
+      var _loc3_ = 9868 - _loc2_.invincibilityTime - _loc2_.invincibility * 2;
+      if(_loc3_ > 1500)
+      {
+         new Color(_loc2_).setTransform({rb:0,gb:0,bb:0});
+         _loc2_._visible = true;
+         _loc2_.hurt = _loc2_.onHurt;
+         this.remove();
+      }
+      else if(_loc3_ > 0)
+      {
+         _loc2_._visible = !_loc2_._visible;
+      }
+   };
+};
+Vaisseau.prototype.shoot = function()
+{
+   var _loc3_;
+   if(Key.isDown(Game.Action) && this.canshoot)
+   {
+      _loc3_ = _root.getMaxDepth();
+      _root.attachMovie("idtir","mcBalle" + _loc3_,_loc3_,{_x:this._x + 55,_y:this._y + 20,fire:40});
+      this.game.soundFireGun.start();
+      _root["mcBalle" + _loc3_].onEnterFrame = function()
+      {
+         this._x += this.fire;
+         if(this._x > 650 || this._x < 0)
+         {
+            this.remove();
+         }
+         var _loc3_ = _root.mcPerso.ennemis;
+         for(var _loc4_ in _loc3_)
+         {
+            if(this.hitTest(_loc3_[_loc4_]))
+            {
+               if(_loc3_[_loc4_]._xscale < 0)
+               {
+                  _loc3_[_loc4_]._xscale = 100;
+               }
+               _root.mcPerso.game.soundMaxiKill.start();
+               _root.mcPerso.game.maxibeurk++;
+               _loc3_[_loc4_].shoot = null;
+               _loc3_[_loc4_].shooted = true;
+               _loc3_[_loc4_].gotoAndStop("shoot");
+               delete _loc3_[_loc4_];
+               if(_root.mcPerso.game.level == 23)
+               {
+                  this.remove();
+               }
+            }
+         }
+      };
+      this.lastshoot = 10582;
+      this.canshoot = false;
+   }
+};
+Vaisseau.prototype.maxibeurk = function()
+{
+   var _loc3_;
+   var _loc4_;
+   var _loc5_;
+   if(7418 - this.time > this.maxibeurkTime)
+   {
+      this.time = 6823;
+      _loc3_ = _root.getMaxDepth();
+      _loc4_ = this.game.difficulty + Math.ceil(Math.random() * 1);
+      _loc5_ = 0;
+      while(_loc5_ < _loc4_)
+      {
+         _root.attachMovie("idMaxibeurkVol","mcMaxibeurk" + _loc3_ + _loc5_,_loc3_ + _loc5_,{_x:700 + _loc5_ * 80,_y:100 + Math.random() * 300,rotate:5,stability:5,speed:10,amplitude:30,target:this});
+         this.ennemis["mcMaxibeurk" + _loc3_ + _loc5_] = _root["mcMaxibeurk" + _loc3_ + _loc5_];
+         _loc5_ += 1;
+      }
+   }
+};
+Vaisseau.prototype.onKeyUp = function()
+{
+   if(!Key.isDown(Game.ACTION) && 8564 - this.lastshoot > this.delay)
+   {
+      this.canshoot = true;
+   }
+};
+Vaisseau.prototype.onLost = function(pThis)
+{
+   this = pThis;
+   clearInterval(this.onTime);
+   this.game.replay("lost");
+};
+Vaisseau.prototype.onFps = function()
+{
+   this.nbframe++;
+   if(Game.lowProc)
+   {
+      this.onFps = null;
+      _quality = "LOW";
+   }
+   var _loc2_;
+   if(2317 - this.timeFps > 20000)
+   {
+      _loc2_ = this.nbframe / 20;
+      if(_loc2_ < 14)
+      {
+         _quality = "low";
+         Game.lowProc = true;
+      }
+      this.onFps = null;
+   }
+   this.fps = 1539;
+};
+Vaisseau.prototype.pause = function()
+{
+   for(var _loc3_ in _root)
+   {
+      if(_root[_loc3_] instanceof MaxibeurkVol || _root[_loc3_] instanceof MaxibeurkVolTir)
+      {
+         _root[_loc3_].onEnterFrame = null;
+      }
+   }
+   this.onFps = null;
+   this.maxibeurk = null;
+   _root.mcFond.scrolling = Zone3.scrolling = 0;
+   this.onEnterFrame = null;
+   this.game.speedTime = 0;
+   _root.attachMovie("idBall","mcBall",_root.getMaxDepth(),{_x:this._x,_y:this._y,target:this,screen:"pause",level:"lev" + this.game.level});
+};
+Vaisseau.prototype.go = function()
+{
+   Key.addListener(this);
+   if(this.game.level == 13)
+   {
+      this.shoot = null;
+      this.maxibeurk = null;
+      this.mcJet.angle = 1;
+      this.mcJet.onEnterFrame = function()
+      {
+         this._y += Math.sin(this.angle += 0.7);
+      };
+   }
+   else if(this.game.level == 23)
+   {
+      this.delay = 200;
+   }
+   else
+   {
+      this.delay = 100;
+   }
+   this.hurt = this.onHurt;
+   this.time = 3696;
+   this.timeFps = 10001;
+   this.onEnterFrame = this.move;
+};
+_global.Zone3 = function()
+{
+   this.debNum = this.num;
+   this.enabled = true;
+   if(this.num == 0)
+   {
+      this.createZone();
+   }
+};
+Zone3["extends"](MovieClip);
+Object.registerClass("idZone13",Zone3);
+Object.registerClass("idZone23",Zone3);
+Object.registerClass("idZone33",Zone3);
+Zone3.scrollingMax = 20;
+Zone3.scrollingMin = 10;
+Zone3.level13 = [[null,"idBloc13_9",null,"idBloc13_1",null,"idStart"],["idBloc13_8",null,"idBloc13_6","","idBloc13_3","idActimel"],[null,"idBloc13_8","idActimel",null,"idForce",null],["idBloc13_6",null,"idBloc13_9","idActimel","idBloc13_3",null],[null,null,"idBloc13_6","idBloc13_6",null,"idForce"],[null,null,"idBloc13_9","idBloc13_3","idActimel","idBloc13_6"],[null,"idBloc13_8","idPack","idBloc13_3",null,"idBloc13_3"],["idBloc13_8",null,"idBloc13_6",null,"idLettre2",null],[null,null,"idBloc13_9",null,"idBloc13_5","idBloc13_3"],["idBouclier","idBloc13_7",null,null,"idBloc13_6","idBloc13_3"],["idActimel",null,null,null,"idBloc13_6",null],["idBloc13_8",null,null,null,"idBloc13_3","idBloc13_2"],[null,null,"idBloc13_8","idBloc13_3","idForce",null],[null,"idActimel",null,"","idBloc13_6","idBloc13_5"],["idActimel","idBloc13_8",null,null,"idActimel",null],[null,"idActimel","idBloc13_9","idBloc13_6",null,"idActimel"],["idBloc13_8","idActimel",null,null,"idBloc13_2",null],[null,"idForce","idBloc13_6","idBloc13_0","idPack","idBloc13_3"],["idActimel","idBloc13_7","idLettre2",null,"idBloc13_6","idBloc13_5"],[null,null,"idBloc13_9",null,"idBouclier",null],["idBloc13_6",null,null,null,null,"idBloc13_6"],["idForce",null,null,"idBloc13_5","idBloc13_6","idBloc13_3"],["idBloc13_9",null,null,null,"idBloc13_5",null],["idBloc13_8","idActimel",null,"idBloc13_3","idPack","idBloc13_2"],["idActimel","idBloc13_6",null,null,null,null],[null,"idBloc13_8","idBloc13_7","idBloc13_5","idBloc13_3",null],["idBloc13_9",null,"idForce","idActimel","idBloc13_6",null],["idBloc13_8","idActimel",null,null,"idPack","idBloc13_2"],["idBloc13_6",null,"idBloc13_8",null,"idPack",null],[null,"idBloc13_6","idForce",null,null,"idBloc13_3"],["idBloc13_8","idActimel","idBloc13_6","idBloc13_0","",null],[null,"idLettre2",null,"idBloc13_1",null,"idBloc13_6"]];
+Zone3.level23 = [[null,null,"idBloc23_9",null,"idBloc23_3","idStart"],[null,"idBloc23_9",null,null,"idActimel","idBloc23_3"],["idBloc23_9","idActimel","idForce",null,null,"idBloc23_3"],["idBloc23_9",null,"idBloc23_7",null,null,null],[null,null,"idBloc23_8","idBloc23_3","idActimel",null],[null,null,null,null,"idBloc23_3",null],["idBloc23_9","idActimel","idBloc23_9",null,null,"idBouclier"],[null,null,"idBloc23_8","idBloc23_3",null,null],[null,null,null,null,"idBloc23_3",null],["idActimel",null,"idBloc23_9","idBloc23_5",null,null],["idBloc23_8","idBloc23_9",null,"idPack",null,null],[null,"idActimel","idBloc23_9","idBloc23_3",null,null],[null,null,"idBloc23_8",null,"idBloc23_1",null],[null,null,null,"idLettre2",null,"idBloc23_3"],[null,null,"idActimel",null,"idBloc23_5",null],[null,"idBloc23_8",null,"idBloc23_1",null,null],[null,"idBloc23_7",null,null,"idBouclier",null],[null,"idBloc23_8",null,"idBloc23_1",null,"idActimel"],[null,"idBloc23_9","idActimel",null,null,"idBloc23_1"],[null,null,null,null,"idBloc23_2",null],[null,null,"idBloc23_9",null,"idBloc23_1","idActimel"],[null,null,null,null,"idBloc23_3","idPack"],[null,"idBloc23_9","idForce",null,"idBloc23_3",null],[null,"idBloc23_7",null,null,null,null],[null,null,"idBloc23_9","idBloc23_3",null,null],[null,"idBloc23_9",null,null,"idActimel",null],[null,"idActimel",null,"idBloc23_2",null,null],["idBloc23_9","idLettre2",null,null,null,"idBloc23_3"],[null,null,"idBloc23_7","idVie",null,null],[null,"idActimel",null,null,"idBloc23_3",null],[null,"idBloc23_7",null,"idBouclier",null,null],["idActimel",null,null,"idBloc23_3",null,null]];
+Zone3.level33 = [[null,null,"idBloc33_9",null,null,"idStart"],[null,null,null,"idActimel",null,"idBloc33_3"],[null,"idBloc33_9",null,null,"idPack",null],[null,"idForce",null,null,"idBloc33_9",null],[null,null,null,null,null,"idBloc33_3"],[null,"idForce",null,"idBloc33_2","idActimel","idBloc33_3"],[null,null,null,null,"idActimel",null],["idBloc33_8",null,null,null,"idBouclier",null],[null,"idPack","idBloc33_9",null,null,"idBloc33_3"],[null,null,null,null,null,null],["idBloc33_9",null,null,"idForce",null,"idBloc33_3"],["idLettre2",null,"idBloc33_9",null,null,null],[null,null,null,"idBloc33_2",null,null],["idBloc33_9","idActimel",null,null,"idForce",null],[null,null,"idBloc33_8","idBloc33_3",null,null],[null,null,null,"idBouclier","idBloc33_1",null],[null,"idBloc33_8",null,null,null,null],[null,"idForce","idBloc33_7",null,null,null],[null,null,null,null,"idBloc33_2","idPack"],[null,"idBloc33_9",null,null,null,"idActimel"],[null,"idBloc33_8",null,null,"idActimel",null],[null,null,null,null,"idBloc33_3",null],[null,null,"idBloc33_7","idActimel",null,"idForce"],[null,null,null,null,"idBloc33_3","idBloc33_2"],[null,null,"idBloc33_9","idLettre2",null,null],[null,"idForce",null,null,"idBloc33_3",null],[null,"idBloc33_9",null,"idActimel",null,"idBouclier"],["idBloc33_9","idPack",null,null,null,"idForce"],[null,"idBloc33_7",null,null,null,null],[null,"idForce",null,null,"idBloc33_2",null],[null,"idBloc33_9",null,"idPack",null,null],["idActimel",null,null,"idBloc33_3","idVie",null]];
+Zone3.prototype.createZone = function()
+{
+   var _loc2_ = this.leveldes[this.num % this.leveldes.length];
+   var _loc3_ = 0;
+   var _loc4_;
+   while(_loc3_ < _loc2_.length)
+   {
+      if(this.game.completed)
+      {
+         _loc2_[_loc3_] = null;
+      }
+      else if(_loc2_[_loc3_] == "idStart" && BonusStart.help)
+      {
+         _loc2_[_loc3_] = null;
+      }
+      else if(this.game.difficulty == 3 && (_loc2_[_loc3_] == "idVie" || _loc2_[_loc3_] == "idBouclier"))
+      {
+         _loc2_[_loc3_] = null;
+      }
+      else if(this.game.difficulty == 2 && _loc2_[_loc3_] == "idVie")
+      {
+         _loc2_[_loc3_] = null;
+      }
+      if(_loc2_[_loc3_] != null)
+      {
+         _loc4_ = {};
+         if(_loc3_ < 3)
+         {
+            if(_loc2_[_loc3_].substring(0,6) == "idBloc")
+            {
+               _loc4_ = {_yscale:-100,_x:_loc3_ * 250};
+            }
+            else
+            {
+               _loc4_ = {_x:_loc3_ * 250 + 30 + Math.random() * 100,_y:100 + Math.random() * 100};
+            }
+         }
+         else if(_loc2_[_loc3_].substring(0,6) == "idBloc")
+         {
+            _loc4_ = {_y:440,_x:(_loc3_ - 3) * 250};
+         }
+         else
+         {
+            _loc4_ = {_x:(_loc3_ - 3) * 250 + 30 + Math.random() * 100,_y:380 - Math.random() * 100};
+         }
+         this.attachMovie(_loc2_[_loc3_],"mcBloc" + _loc3_,_loc3_,_loc4_);
+      }
+      else
+      {
+         this["mcBloc" + _loc3_].removeMovieClip();
+      }
+      _loc3_ += 1;
+   }
+   this.num += 2;
+   this.enabled = false;
+   this._parent["mcZone" + Math.abs(this.debNum - 1)].enabled = true;
+};
+Zone3.prototype.next = function(pThis)
+{
+   this = pThis;
+   clearInterval(this.onTime);
+   this.game.replay("next");
+};
+_global.Blocs3 = function()
+{
+   this.mcHit._visible = false;
+};
+Blocs3["extends"](MovieClip);
+Object.registerClass("idBloc13_0",Blocs3);
+Object.registerClass("idBloc13_1",Blocs3);
+Object.registerClass("idBloc13_2",Blocs3);
+Object.registerClass("idBloc13_3",Blocs3);
+Object.registerClass("idBloc13_4",Blocs3);
+Object.registerClass("idBloc13_5",Blocs3);
+Object.registerClass("idBloc13_6",Blocs3);
+Object.registerClass("idBloc13_7",Blocs3);
+Object.registerClass("idBloc13_8",Blocs3);
+Object.registerClass("idBloc13_9",Blocs3);
+Object.registerClass("idBloc23_0",Blocs3);
+Object.registerClass("idBloc23_1",Blocs3);
+Object.registerClass("idBloc23_2",Blocs3);
+Object.registerClass("idBloc23_3",Blocs3);
+Object.registerClass("idBloc23_4",Blocs3);
+Object.registerClass("idBloc23_5",Blocs3);
+Object.registerClass("idBloc23_6",Blocs3);
+Object.registerClass("idBloc23_7",Blocs3);
+Object.registerClass("idBloc23_8",Blocs3);
+Object.registerClass("idBloc23_9",Blocs3);
+Object.registerClass("idBloc33_0",Blocs3);
+Object.registerClass("idBloc33_1",Blocs3);
+Object.registerClass("idBloc33_2",Blocs3);
+Object.registerClass("idBloc33_3",Blocs3);
+Object.registerClass("idBloc33_4",Blocs3);
+Object.registerClass("idBloc33_5",Blocs3);
+Object.registerClass("idBloc33_6",Blocs3);
+Object.registerClass("idBloc33_7",Blocs3);
+Object.registerClass("idBloc33_8",Blocs3);
+Object.registerClass("idBloc33_9",Blocs3);
